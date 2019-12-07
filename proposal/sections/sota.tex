@@ -1,0 +1,37 @@
+\section{State of the Art}
+% Here you will build a relatively complete list of papers that already solve the problem you are trying to solve (or a very similar one). If you think that your problem is very novel (i.e., nobody has attacked it before) please think twice. Most probably you are missing something. However, if indeed your problem has never been tackled before, you have to convince the reader how come this is the case. A good state-of-the-art section lists papers, giving a short summary of the contributions of those papers are (i.e., what they offer to the literature). After you list those contributions, you have to say how they fall short (i.e., why they do not solve your problem) and what you think your thesis will do to tackle your problem.
+
+Many error detection tools have been proposed in research. Most works focused on four different types of errors, namely: Outliers, Duplicates, Rule violations and Pattern violations. There have been numerous solutions to all these various subproblems with high precision and recall \cite{Abedjan2016-qp}. 
+Newer approaches leverage the solutions to these subproblems into a better solution for the general data error detection problem. Also, more work in active learning has been done, leveraging expertise of human input.
+
+\paragraph{Auto-Detect \cite{Wang2019-jg}} is a data-driven error detection approach (very similar to a more recent tool Uni-Detect \cite{Huang2018-er}, but Auto-Detect outperforms Uni-Detect). It uses a large corpus consisting of 100M web tables extracted from a commercial search engine. Because it is extracted from a commercial search engine, the data quality is expected to be high. It tries to learn about the four common classes of errors. It performs single-column error detection and creates a generalization tree to translate actual values to patterns to compare. This tool however needs a specific corpus related to the subject dataset. While this tool performs really well in its own tests, it is not tested on common benchmark datasets. Also, the implementation of this tool is not available publicly.
+
+\paragraph{Metadata-Driven Error Detection \cite{Visengeriyeva2018-qz}} makes use of combining different algorithms by either bagging or stacking, and adds content-based metadata to the features to enhance error detection classification. Augmenting system features with automatically generated metadata information will improve the error predicting outcome. This insight might help future work. The base error detection strategies in the ensemble learning methods need to be chosen and configured by hand, which is again a hard process. Also, this work has not been developed any further for a few months and other methods outperform this now.
+
+\paragraph{REDS \cite{Mahdavi2019-pk}} estimates the performance of error detection strategies based on datasets using their so-called "dirtiness profiles". It takes a number of samples from the dataset, extracts content, structure and quality features from this sample. Then it trains 
+This is promising as the performance does not require unrealistically large repositories. However, their estimation error was still increasing in their tests by adding more data profiles to the repository.
+So a large repository could be possible and would lead to better estimations of performance of strategies.
+It is used in Raha \cite{Mahdavi2019-zf}, but the idea could be used to improve explainability and predictability of performance of certain error detection tools.
+
+
+%% HoloDetect
+\paragraph{HoloDetect \cite{Heidari2019-ox}} is a few-shot learning framework for error detection that uses data augmentation to create more synthetic training examples resulting in high performance. It also has an expressive model to learn representations and syntactic and semantic differences in errors. This work uses a lot of feature engineering fed into a neural network. Feature engineering is hard and might influence the performance, especially because the exact implementation is not public. Also, depending on the amount of training time and samples, this method varies in performance. One other note is that the released $F_1$ scores are not calculated correctly for some of their tests, making HoloDetect come out on top every time, whereas it would not have been the best. The key takeaway is that data augmentation could solve the imbalanced data problem and even outperforms active learning methods, reducing human efforts. 
+
+%%%% Interactive cleaning
+\paragraph{UGuide \cite{Thirumuruganathan2017-ip}} is an interactive tool that detects the set of functional dependency detectable errors under a fixed human effort budget. This work has a good focus on the human budget in data cleaning. One downside of this research is that all the errors were synthetically generated using BART \cite{Arocena2015-om}. It would be interesting to see if finding FDs will still be possible with highly erroneous datasets. It asks the user to verify tuple-based, fd-based and cell-based questions about the validity of dependencies. However, only using functional dependencies is not expressive enough to tackle the whole error detection problem, but the methodology of this work gave extra insights especially on human budget.
+
+%% Raha
+\paragraph{Raha \cite{Mahdavi2019-zf}} is a configuration-free error detection system. Using the data profiles like in REDS \cite{Mahdavi2019-pk}, it selects different preconfigured strategies automatically, based on previously cleaned datasets. Then, it incorporates the outputs from various error detection strategies as a feature vector for the error detection task. 
+Using these feature vectors, it creates clusters of which samples will be labeled in order to reduce user involvement. Drawbacks could be that information might get lost in the stacking process. Also, the (time) complexity of this tool increases vastly when adding more base learners.
+
+%% ED2
+\paragraph{ED2 \cite{Neutatz2019-aw}} or Example-Driven Error Detection, is a machine learning based error detection technique that also makes use of active human labeling. 
+Like HoloDetect \cite{Heidari2019-ox}, it creates features that cover information on the attribute, tuple (across attributes), and dataset level for each data cell of the dataset. It iteratively selects columns that will be sampled from, humanly labeled and propagated using different strategies. The main contribution is the effective selection of columns, reducing the user input effort by selecting columns \& cells to be labeled, that will have the most positive impact on the learning. As with all active learning tools, the drawback is the human interaction. The amount of examples needed to be labeled by the user differ vastly. Also, no confidence intervals are given for the performance metrics, making it unsure what the worst case performance will be. 
+
+%% General about interactive
+~\\In general, 
+% enough context?
+% Human expertise
+
+
+%% In general things that need to be added 

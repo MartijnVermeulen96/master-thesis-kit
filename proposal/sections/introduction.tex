@@ -1,0 +1,51 @@
+
+\section{Introduction}
+% What is the problem? 
+
+Error detection in relational data is a highly heterogeneous problem, with a large variety of possible solutions to detect errors. Many of the state-of-the-art publications only cover metrics their tool is specifically designed for. Other key metrics like human expertise, runtime and setup are not discussed in all research papers. Because there are many different solutions and each solution advertises different advantages and disadvantages, one can't see the forest for the trees when it comes to choosing the right tool. It is a time-consuming and cumbersome job to choose the best error detection tool.
+
+% Why is it interesting and important?
+Errors in relational data are present in many fields, both in academics as well as in the industry. Not only do the type of errors differ, the expertise of users or data cleaners varies a lot. 
+
+%% Industry & academics
+In business, it is known throughout various studies and news articles that the cost of bad data is high \cite{Ilyas2015-oh}. Every company nowadays wants to be more "data-driven", but does not foresee the challenge that arises with processing data. Bad quality in academics could lead to falsely substantiated conclusions. For the past few years, governments, industry and academics have been investing both money and effort into big data and the data processing pipelines in general \cite{Cai2015-hr}. \\Nowadays, both industry and academia are highly involved with each other. As data quality issues in relational data sources have been a pressing problem for industry for a longer period of time, researcher now try to take learning from experience in the field in corporate businesses \cite{Stonebraker2018-ag}. Working with industry allows scientists to have access to more resources and real-life examples of the complications of errors in relational data, which could accelerate the solution finding process.
+
+% Why is it hard? (E.g., why do naive approaches fail?)
+%% Time consuming
+Error detection is time-consuming. Whereas there are many automatic solutions in other fields in computer science, the relational data cleaning field still has to cope with a lot of manual edits, to improve the data quality enough to work with the dataset.
+
+%% One size fits all
+There are no single dominant tool for general purpose error detection and domain specific tools achieved better precision and recall scores than general-purpose tools \cite{Abedjan2016-jc}.
+
+%% REDS noemen, Raha noemen, UniDetect
+There are many promising new tools that have been released in leading conferences lately \cite{Mahdavi2019-zf,Heidari2019-ox,Neutatz2019-aw,Visengeriyeva2018-qz,Mahdavi2019-pk,Wang2019-jg}, but they all come with compromises or have missing components in the research making it hard, if not impossible to reproduce.
+Also, in many research papers, synthetic errors are introduced in clean datasets by using BART \cite{Arocena2015-om}. These synthetic errors might have inherently different underlying characteristics which may not be present in other real-world datasets.
+
+% Why hasn't it been solved before? (Or, what's wrong with previous proposed solutions? How does mine differ?)
+%% Subproblems have been solved, but the overview is gone
+Whilst the task of error detection has many solutions, there are some flaws in the research. The following main problems have occurred in recent work:
+\begin{outline}
+    \1 Completeness problems
+        \2 Tools are not tested on all benchmark datasets
+        \2 Researchers only take partial subsets of benchmark datasets when evaluating
+        \2 Not all metrics are covered in each paper
+    \1 Score problems
+        \2 The same tools have different scores in different papers published
+        \2 Score calculations in some state-of-the-art papers are not correct
+        \2 Metric configurations are not completely explained
+    \1 Error generation problem
+        \2 Focus on the synthesized data errors only
+\end{outline}
+
+% What are the key components of my approach and results? Also include any specific limitations.
+To solve these problems, my approach will exist of the following characteristics.
+\begin{outline}
+    \1 Objective and accurate testing of different tools against benchmark datasets
+        \2 Both with real errors and synthesized errors
+        \2 Using different metrics to serve different needs for other researchers
+    \1 Extensive profiling of the datasets and scoring of the tools
+        \2 Analysis on these profiles to lead to new insights
+\end{outline}
+Some of the problems above might not be a problem, if a broader research is done. For instance, when testing on only synthesized data errors, results might be biased. But if tested on both real and synthesized errors, it might lead to new insights and clear results.\\
+If also the characteristics of the datasets are known, researchers can understand and explain why a certain tool might work or not on a specific dataset.\\
+The tests and analysis will be done with a wide range of tools and datasets. However, due to the high amount of available tools and datasets, some might be excluded. So the focus will lie on creating a reproducible, open and extensive methodology of analysing this problem. Whereas some recent works have not been publishing there code or exact configurations, the goal of this work will be to create publicly available and extensible insights into the data error detection problem.
