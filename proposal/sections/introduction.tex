@@ -8,18 +8,18 @@ Error detection in relational data is a highly heterogeneous problem, with a lar
 Errors in relational data are present in many fields, both in academics as well as in the industry. Not only do the type of errors differ, the expertise of users or data cleaners varies a lot. 
 
 %% Industry & academics
-In business, it is known throughout various studies and news articles that the cost of bad data is high \cite{Ilyas2015-oh}. Every company nowadays wants to be more "data-driven", but does not foresee the challenge that arises with processing data. Bad quality in academics could lead to falsely substantiated conclusions. For the past few years, governments, industry and academics have been investing both money and effort into big data and the data processing pipelines in general \cite{Cai2015-hr}. \\Nowadays, both industry and academia are highly involved with each other. As data quality issues in relational data sources have been a pressing problem for industry for a longer period of time, researcher now try to take learning from experience in the field in corporate businesses \cite{Stonebraker2018-ag}. Working with industry allows scientists to have access to more resources and real-life examples of the complications of errors in relational data, which could accelerate the solution finding process.
+In business, it is known throughout various studies and news articles that the cost of bad data is high \cite{Ilyas2015-oh}. Every company nowadays wants to be more 'data-driven', but does not foresee the challenge that arises with processing data. Bad quality in academics could lead to falsely substantiated conclusions. For the past few years, governments, industry and academics have been investing both money and effort into big data and the data processing pipelines in general \cite{Cai2015-hr}. \\Nowadays, both industry and academia are highly involved with each other. As data quality issues in relational data sources have been a pressing problem for industry for a longer period of time, researcher now try to take learning from experience in the field in corporate businesses \cite{Stonebraker2018-ag}. Working with industry allows scientists to have access to more resources and real-life examples of the complications of errors in relational data, which could accelerate the solution finding process.
 
 % Why is it hard? (E.g., why do naive approaches fail?)
 %% Time consuming
 Error detection is time-consuming. Whereas there are many automatic solutions in other fields in computer science, the relational data cleaning field still has to cope with a lot of manual edits, to improve the data quality enough to work with the dataset.
 
 %% One size fits all
-There are no single dominant tool for general purpose error detection and domain specific tools achieved better precision and recall scores than general-purpose tools \cite{Abedjan2016-jc}.
+There is no single dominant tool for general purpose error detection and domain specific tools achieved better precision and recall scores than general-purpose tools \cite{Abedjan2016-jc}.
 
 %% REDS noemen, Raha noemen, UniDetect
 There are many promising new tools that have been released in leading conferences lately \cite{Mahdavi2019-zf,Heidari2019-ox,Neutatz2019-aw,Visengeriyeva2018-qz,Mahdavi2019-pk,Wang2019-jg}, but they all come with compromises or have missing components in the research making it hard, if not impossible to reproduce.
-Also, in many research papers, synthetic errors are introduced in clean datasets by using BART \cite{Arocena2015-om}. These synthetic errors might have inherently different underlying characteristics which may not be present in other real-world datasets.
+Also, in many research papers, synthetic errors are introduced in clean datasets by using BART \cite{Arocena2015-om}. These synthetic errors might have inherently different underlying characteristics which may not be present in other real-world datasets. Also, focus on either tuple or cell error might differ throughout different works.
 
 % Why hasn't it been solved before? (Or, what's wrong with previous proposed solutions? How does mine differ?)
 %% Subproblems have been solved, but the overview is gone
@@ -32,7 +32,7 @@ Whilst the task of error detection has many solutions, there are some flaws in t
     \1 Score problems
         \2 The same tools have different scores in different papers published
         \2 Score calculations in some state-of-the-art papers are not correct
-        \2 Metric configurations are not completely explained
+        \2 Tool \& metric configurations are not completely explained
     \1 Error generation problem
         \2 Focus on the synthesized data errors only
 \end{outline}

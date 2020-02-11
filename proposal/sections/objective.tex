@@ -1,8 +1,6 @@
 \section{Thesis Objective}
 % The objective of the thesis is, of course, to solve the problem that you mentioned above. However, some problems are too big to be addresses/solved within a thesis. In this section try to become a bit more specific on what the objective of this thesis is, rather than simply repeating that you want to solve the problem mentioned in the introduction. We need some more details here.
 
-The thesis objective starts with an empirical case study \& comparison of state of the art techniques. In order to do so, 
-
 % Empirical case study & comparison
 %
 %   |
@@ -13,7 +11,6 @@ The thesis objective starts with an empirical case study \& comparison of state 
 %   |
 %   v
 %
-REDS \cite{Mahdavi2019-pk}
 % Create data profiles (similar to REDS) to estimate performance of tools on unseen data + create profile repo
 % 
 %   |
@@ -25,6 +22,14 @@ REDS \cite{Mahdavi2019-pk}
 %   v
 % 
 % Set future directions based on complete overview
+
+The thesis objective starts with an empirical case study \& comparison of state of the art techniques. In order to do so, the goal is to create an interactive/easy-to-use API, to run different tools and configurations in less time. The tools publicly available will be ported for this usage, similar to efforts in REDS \cite{Mahdavi2019-pk}. Using this API, a large overview of scores and configurations will be covered, with a main focus on automatic tools. When a highly promising implementation of a tool is not publicly available, an implementation will be reproduced to compare.
+
+~\\Besides measuring performance of different tools, data profiles of cleaned datasets will be kept like in Raha \cite{Mahdavi2019-zf}. Using these profiles, estimations of performance on unseen datasets can be done. A publicly available repository of dataset profiles and error detection tool performance on these datasets will be created. This will allow others to see in which cases (with what kind of data profiles), which tools perform well under different circumstances (filter on active learning, preconfiguration, runtime etc..).
+
+~\\Then, the data profiles will be analyzed. Using different methods, like clustering, try to see whether it is possible to see which tools work similar in terms of performance on specific datasets. Using these clusters, try to see where gaps in methods might lie. As many state of the art tools use simpler error detection methods as base learners, it would be helpful to find whether the addition of vector representations of the underlying methods add up to the resulting general method: $\overrightarrow{\text{simple}_1} + \overrightarrow{\text{simple}_2} = \overrightarrow{\text{ensemble}}$. This allows for more substantiated arguments for choosing an base algorithm and the synthesis of better performing complex ensemble methods.
+
+~\\Finally, future research directions and conclusions based on these findings will be presented and all findings and source code will be made publicly available. 
 
 
 \subsection*{Concrete Research Question} % Optional: 
@@ -47,7 +52,7 @@ REDS \cite{Mahdavi2019-pk}
         \2 Objective and accurate testing of different tools against benchmark datasets
         \2 Cell error \& tuple error scores
         \2 F1-score, Precision \& Recall
-        \2 Incorporate other settings, like training data size, runtime and human interaction
+        \2 Incorporate all configuration settings and performance metrics, like training data size, runtime and human interaction
     \1 Interactive tool to automate execution of different error detection tools
     \1 Data profile repository for further analysis
         \2 Analysis on the profiles and explanations on clusters of profiles
