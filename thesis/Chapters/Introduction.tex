@@ -1,17 +1,46 @@
 \chapter{Introduction}
+\label{chap:introduction}
 % Story on data cleaning, to introduce the subject
 
+\section{Errors}
+\label{sec:errors}
 % What are errors?
 Error detection is the first step in the data cleaning process.
 
-\blockquote{Data cleaning is the process of detecting and correcting (or removing) corrupt or inaccurate records from a \textbf{record set, table, or database} and refers to \textbf{identifying incomplete, incorrect, inaccurate or irrelevant parts} of the data and then replacing, modifying, or deleting the dirty or coarse data.}
+\blockquote{Data cleaning is the process of \textbf{\textit{detecting}} and correcting (or removing) corrupt or inaccurate records from a \textbf{record set, table, or database} and refers to \textbf{identifying incomplete, incorrect, inaccurate or irrelevant parts} of the data and then replacing, modifying, or deleting the dirty or coarse data.}
 
-The goal is to identify incomplete, incorrect, inaccurate or irrelevant parts of the data.
+The goal of error detection is to identify incomplete, incorrect, inaccurate or irrelevant parts of the data.
 
 % What are errors in relational data sources + what are relational data sources?
 
 % What is the problem? 
 
-
+\section{Motivation}
+\label{sec:motivation}
 % Why is it interesting and important?
 %% Industry & academics
+
+%% Focus on the automatic error detection, expert-free, no rules etc...
+
+%% Costly to run all
+
+%% Interpretability use case / explainable AI
+
+\section{Research Questions}
+\label{sec:researchquestions}
+Resulting from this motivation, the following research questions will tried to be answered in this thesis:
+
+\paragraph{Main Research Question} How to choose a fitting error detection algorithm for a specific relational dataset?
+
+~\\With the following sub-questions:
+\paragraph{RQ1} What is the current state of the art and what is the performance of these tools?
+
+\paragraph{RQ2} Is it possible to create an extensive data profile to estimate performance on unseen datasets?
+
+\paragraph{RQ3} Is it possible to generate a ranking of tools according to their performance on unseen datasets?
+
+\paragraph{RQ4} Do these data profiles provide more interpretability of error detection tools?
+
+
+\section{Outline}
+\label{sec:outline}

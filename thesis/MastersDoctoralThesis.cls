@@ -482,8 +482,8 @@ KOMA-script documentation for details.}]{fancyhdr}
 %	PHYSICAL CONSTANTS PAGE DESIGN
 %----------------------------------------------------------------------------------------
 
-\newcommand{\constantsname}{Physical Constants}
-\providecaptionname{english,british,american}{\constantsname}{Physical Constants}
+\newcommand{\constantsname}{Definitions \& Constants}
+\providecaptionname{english,british,american}{\constantsname}{Definitions \& Constants}
 \providecaptionname{ngerman,german,austrian,naustrian}{\constantsname}{Physikalische Konstanten}
 
 \NewDocumentEnvironment{constants}{ m }{%

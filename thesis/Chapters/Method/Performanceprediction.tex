@@ -1,0 +1,8 @@
+
+% RQ2
+\section{Performance prediction}
+\label{sec:performanceprediction}
+The next step was to use the results given by the empirical study (\ref{sec:empirical}) for predicting performance (F1-score) on unseen new datasets. This idea was proposed by \cite{Mahdavi2019-pk}. This paper proposes the idea of a 'dirtiness profile'. The idea is that error detection tools would have similar performance on similar datasets. Regression models would be trained and tested on characteristics of the dataset, also called 'dirtiness profile' (input) and F1-scores (output). This sections replicate this study (\cite{Mahdavi2019-pk}), by evaluating the mean square error on predicted performances. The train and test in and outputs are retrieved from the empirical study (section \ref{sec:empiricalstudy}). One main difference is that this research will solely focus on automated prediction, where no rules or patterns from the ground truth are taken and no user defined configurations need to be created in order to perform the predictions. Also, multiple new input features will be introduced to see if the performance can be increased. 
+
+\subsection{Data profiles}
+\label{subsec:dataprofiles}

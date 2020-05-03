@@ -40,11 +40,14 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage[utf8]{inputenc} % Required for inputting international characters
 \usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage{float}
+\usepackage{adjustbox}
 
 \usepackage{mathpazo} % Use the Palatino font by default
 \usepackage{todonotes}
 \usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 \usepackage{outlines}
+\usepackage{enumitem}
 
 \addbibresource{references.bib} % The filename of the bibliography
 
@@ -84,6 +87,11 @@ headsepline, % Uncomment to get a line under the header
 \department{\href{https://www.tudelft.nl/en/eemcs/the-faculty/departments/software-technology/}{Software Technology}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
 \group{\href{http://www.wis.ewi.tudelft.nl/}{Web Information Systems Group}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 \faculty{\href{https://www.tudelft.nl/en/ewi/}{Electrical Engineering, Mathematics and Computer Science}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
+
+% The GitHub repo
+\newcommand{\githubsource}{https://github.com/MartijnVermeulen96/master-thesis}
+\newcommand{\pythonsource}{https://www.python.org/}
+\newcommand{\scikitlearnsource}{}
 
 \AtBeginDocument{
 \hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
@@ -220,16 +228,18 @@ The acknowledgments and the people to thank go here, don't forget to include you
 %	PHYSICAL CONSTANTS/OTHER DEFINITIONS
 %----------------------------------------------------------------------------------------
 
-\hide
+% \hide
 \begin{constants}{lr@{${}={}$}l} % The list of physical constants is a three column table
+
+Error detection strategy & & Combination of tool and a specific configuration
 
 % The \SI{}{} command is provided by the siunitx package, see its documentation for instructions on how to use it
 
-Speed of Light & $c_{0}$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
+% Speed of Light & $c_{0}$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
 %Constant Name & $Symbol$ & $Constant Value$ with units\\
 
 \end{constants}
-\unhide
+% \unhide
 %----------------------------------------------------------------------------------------
 %	SYMBOLS
 %----------------------------------------------------------------------------------------
@@ -265,7 +275,7 @@ $\omega$ & angular frequency & \si{\radian} \\
 % Uncomment the lines as you write the chapters
 
 \include{Chapters/Introduction}
-\include{Chapters/PreviousWork}
+\include{Chapters/Background}
 \include{Chapters/Methodology}
 \include{Chapters/Results}
 \include{Chapters/Analysis}
