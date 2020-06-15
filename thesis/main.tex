@@ -40,6 +40,8 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage[utf8]{inputenc} % Required for inputting international characters
 \usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage{lmodern,textcomp}
+
 \usepackage{float}
 \usepackage{adjustbox}
 
@@ -48,10 +50,19 @@ headsepline, % Uncomment to get a line under the header
 \usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 \usepackage{outlines}
 \usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{layouts}
 
 \addbibresource{references.bib} % The filename of the bibliography
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+
+\usepackage{caption, subcaption}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 \let\hide\iffalse
 \let\unhide\fi
@@ -278,7 +289,6 @@ $\omega$ & angular frequency & \si{\radian} \\
 \include{Chapters/Background}
 \include{Chapters/Methodology}
 \include{Chapters/Results}
-\include{Chapters/Analysis}
 \include{Chapters/Discussion}
 \include{Chapters/ConclusionFuture}
 

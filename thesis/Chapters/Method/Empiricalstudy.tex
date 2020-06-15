@@ -28,8 +28,35 @@ Each experiment will be pushed to the queue of experiments, allowing for retriev
 % Error detection API to do experiments
 \subsection{Error detection framework}
 First, a framework for running error detection tools was designed. The purpose of creating a single framework is to have homogeneous in and output for each selected error detection strategies, creating the possibility of running batches of experiments in a structured manner. 
-The structure of the error detection framework is as follows:
-\begin{
+The content and structure of the error detection framework is as follows:
+\begin{itemize}[label=\ding{212}]
+\item dataset
+\item experiment
+% \item helpers
+%     \begin{itemize}[label=\ding{212}]
+%         \item autofd
+%         \item autoregex
+%     \end{itemize}
+\item profiler
+\item tool
+\item tools
+    \begin{itemize}[label=\ding{212}]
+        \item ...
+        \item see section \ref{subsec:tools}
+    \end{itemize}
+\end{itemize}
+
+\paragraph{dataset} contains the class for handling datasets for the experiments. It is based upon the work done by \cite{Mahdavi2019-zf} where each dirty dataset has a clean counterpart. Errors can be calculated both cell-wise as well as row-wise. Information about a dataset can be uploaded for later use and metrics like precision, recall and the F1-measure can be calculated from within this class.
+
+\paragraph{experiment} contains the workflow depicted in figure \ref{fig:empiricalsetup}. Objects from this class can create the tool-configuration-dataset triples for the empirical study. Also, it contains the incremental queuing system for execution of experiments, which can be interrupted and resumed at will. Besides the workings shown in figure \ref{fig:empiricalsetup}, this part of the framework supports timeouts of the experiments, to shut down experiments whenever the preconfigured time limit is set. Lastly, it will upload the result metrics, configuration and runtime to a centralized database to further filter and analyze the results.
+
+\paragraph{profiler} contains the elements to profile datasets and predict performance for different tools. This will be further discussed in section \ref{sec:performanceprediction}.
+
+\paragraph{tool} contains the classes for creating error detection tool instances and the base class for tool. The tool creator dynamically finds added tools and is possible to return Tool instances for each error detection tool. Each error detection tool is adjusted to work in similar fashion. It contains an abstract method to run the code, expecting similar input and output for each tool. The tool base class has subprocess functionality to support the timeouts set by the experiment and to run non-Python code. The tool base class also cleans up left over subprocesses whenever timeouts are reached. 
+
+\paragraph{tools} contains each error detection specific implementation of the Tool base class. Only the initialization and the \verb|run| method need to be implemented for each tool work, making it easy to extend this framework. Every tool is implemented in a different submodule. The implemented tools will be further discussed in subsection \ref{subsec:tools}. 
+
+
 
 \subsection{Metrics}
 \label{subsec:metrics}
@@ -40,65 +67,149 @@ Cell-based metrics, are metrics that identify each cell in a dataset as a separa
 
 \subsubsection{Row-based metrics}
 Row-based metrics, are metrics that identify each row in a dataset as a separate entity in the test set. A row could contain multiple errors, but only the whole row is counted as 1 positive or negative.
-\todo{Add visual example of scores \& row vs. cell based metrics}
 
 \subsubsection{Scores}
 In the case of error detection, instances are either erroneous (positive) or clean (negative). Because the ground truth of the datasets in section \ref{subsec:datasets} is known, the following metrics can be calculated directly after the execution of a tool.
 
-\paragraph{Accuracy}
-is the metric consisting of the sum of all true positives and true negatives, divided by the total number of instances. Whenever working with imbalanced datasets, this number could give a misleading confidence in the score, whereas the larger type (positives or negatives) dominates the score.
+\subsubsection{Examples}
+\todo{Add visual example of scores \& row vs. cell based metrics}
+\todo{Add visual example of different scores}
 
-\paragraph{Precision}
-is the metric consisting of the count of all true positives, divided by all the true positives and false positives. This metric is the fraction of relevant instances among all the "detected" positives. High precision means that the quality of errors detected is good, without having a large fraction of false positives. This metric could be helpful for completely automated processes. If precision is 1, no mistakes were made in the detected errors and no human interaction is needed. This metric however does not tell anything about the portion of total errors retrieved and errors still left in the dataset, only about the quality of the instances predicted to be errors.
-
-\paragraph{Recall} 
-is the metric consisting of the count of all true positives, divided by the count of all true positives and false negatives. Whereas precision measures the quality of positively labeled instances, recall is the fraction of correctly detected errors divided by the total number of true errors in the dataset. This metric focuses on retrieving all errors from the dataset, without any regard for the quality of the predictions.
-
-\paragraph{F1-score}
-is the metric that is the harmonic mean of precision and recall. So it is a combination of both recall and precision, measuring each score with equal importance. Due to this mix of importance, it is usable as a single metric, while having a larger scope of measurement.
-~\\The F1-score (also F-measure), will be the main goal to estimate in later sections.
 
 \subsection{Datasets}
 \label{subsec:datasets}
 The datasets selected contained different types of errors, to create a heterogeneous test set to compare the tools and configurations. Errors in a dataset are defined by the difference in the dirty dataset and clean dataset. So only the ground truth makes up an error. Errors can be seen as a transformation of the ground truth to some dirty value. These transformations could specify why the dirty version is wrong. Below are different "error types" that describe errors that have similar transformation between the dirty instance and the ground truth. Of course, there might be overlap in these transformation, as one type of transformation could have the same effect as another type, but these categorizations give an overview of the dataset quality one has to deal with.
 
 \subsubsection{Error types}
+The error types are derived from section \ref{subsec:errortypes}, with the addition of the "other errors", which contains errors that cannot be found or described by the default error type categories.
+
 \begin{itemize}
-    \item \textit{Wrong patterns:} Values that are erroneous and do not fit in the common pattern of that column (i.e. 2k20 in stead of 2020)
-    \item \textit{Missing values:} Empty values or missing value placeholders (N/A) that are replaced are supposed to be a real value
-    \item \textit{Wrong content:} An error value where the content of the entity is changed, i.e. wrong categories, description or other matters that change the meaning of the underlying value.
-    \item \textit{Spelling errors:} Error values where content and pattern is correct, but with wrong spelling.
-    \item \textit{Inconsistent representations of entities:} Inconsistent abbreviations or references to entities (like states, companies, universities, etc..)
-    \item \textit{Numerical outliers:} Numerical values that are erroneous and do not fit in the (column) distribution of the dataset
-    \item \textit{Classification errors:} Values that are result of a classification (output) based on the other given columns, but the output is wrong
+    \item \textit{Outliers:} Values that are erroneous and do not fit in the (column) distribution of the dataset
+    \item \textit{Pattern violations:} Values that are erroneous and do not fit in the common pattern of that column (i.e. 2k20 in stead of 2020). Also error values where content and pattern is correct, but with wrong spelling.
+    \item \textit{Rule violations:} Also, empty values or missing value placeholders (N/A) that are replaced are supposed to be a real value. Inconsistent abbreviations or references to entities (like states, companies, universities, etc..).
+    .\item \textit{Duplicates:} are different tuples, referring to the same real-world entity.
+    \item \textit{Other error types:} examples of this type are values that are result of a classification (output) based on the other given columns, but the output is wrong. An error value where the content of the entity is changed, i.e. wrong categories, description or other matters that change the meaning of the underlying value.
 \end{itemize}
 
-(1 ED2 \cite{Neutatz2019-aw}, 2 Raha \cite{Mahdavi2019-zf}, 3 CleanML \cite{Li2019-ve}, 4 REDS \cite{Mahdavi2019-pk})
-\todo{Paragraph for each dataset used}
+% \begin{itemize}
+%     \item \textit{Outliers:} Values that are erroneous and do not fit in the (column) distribution of the dataset
+%     \item \textit{Pattern violations:} Values that are erroneous and do not fit in the common pattern of that column (i.e. 2k20 in stead of 2020)
+%     \item \textit{Spelling errors:} Error values where content and pattern is correct, but with wrong spelling.
+%     \item \textit{Inconsistent representations of entities:} Inconsistent abbreviations or references to entities (like states, companies, universities, etc..)
+%     \item \textit{Missing values:} Empty values or missing value placeholders (N/A) that are replaced are supposed to be a real value
+%     \item \textit{Wrong content:} An error value where the content of the entity is changed, i.e. wrong categories, description or other matters that change the meaning of the underlying value.
+%     \item \textit{Classification errors:} Values that are result of a classification (output) based on the other given columns, but the output is wrong
+% \end{itemize}
 
-A summary of the list of datasets used for the empirical study, performance estimation and ranking of error detection strategies can be found below (table \ref{tab:datasets}).
-~\\
+\subsubsection{Selected datasets}
+A summary of the list of datasets used for the empirical study, performance estimation and ranking of error detection strategies can be found below (table \ref{tab:datasets}). The datasets were taken from published data from the following papers: 
+\begin{itemize}
+    \item ED2 by \cite{Neutatz2019-aw}
+    \item Raha by \cite{Mahdavi2019-zf}
+    \item REDS by \cite{Mahdavi2019-pk}
+    \item CleanML by \cite{Li2019-ve}
+\end{itemize}
+
 \begin{table}[H]
 \begin{adjustbox}{tabular=lllll,center}
-Name        & Error types \\ \hline
-Beers & Wrong patterns \& missing values                              \\
-Flights                          & Wrong patterns \& missing values                              \\
-Hospital   & Spelling mistakes \& wrong patterns                        \\
-Rayyan                           & Wrong patterns, wrong content \& missing values              \\
-Tax                                       & Wrong patterns                                            \\
-Toy                           & Missing values \& wrong content                           \\
-Restaurants          & Wrong patterns, wrong content \& missing values                  \\
-Restaurant    & Pattern errors \& spelling errors                         \\
-Movies               & Pattern errors, wrong content \& missing values               \\
-Movie             & Inconsistent representations of entities                  \\
-University                       & Inconsistent representations of entities                     \\
-Uscensus                                  & Missing values, wrong content \& classification errors    \\
-KDD          & Wrong content, numerical outliers \& classification errors   \\
-EEG                              & Numerical outliers \& classification errors                  \\
-Company     & Wrong patterns                                                        \end{adjustbox}
-\caption{Table with different datasets used, a small description, the common error types and their source}
+Name        & Error types                                              \\ \hline
+Beers       & Pattern violations \& Rule violations                    \\
+Flights     & Pattern violations \& Rule violations                    \\
+Hospital    & Pattern violations                                       \\
+Rayyan      & Pattern violations \& Rule violations                    \\
+Tax         & Pattern violations                                       \\
+Toy         & Rule violations \& Other error types                     \\
+Restaurants & Pattern violations \& Rule violations                    \\
+Restaurant  & Pattern violations                                       \\
+Movies      & Pattern violations, Rule violations \& Other error types \\
+Movie       & Rule violations                                          \\
+University  & Rule violations                                          \\
+Uscensus    & Rule violations \& Other error types                     \\
+KDD         & Outliers \& Other error types                            \\
+EEG         & Outliers \& Other error types                            \\
+Company     & Pattern violations                                      
+\end{adjustbox}
+\caption{Table with different datasets used and the common error types present in these datasets}
 \label{tab:datasets}
 \end{table}
+
+\paragraph{Beers} 
+List of different beers
+Numeric ID's, foreign keys, Names in alphanumeric, City, state abbreviation, includes amount of ounces (float/int) \& percentage alcohol (float)
+\\(Source: ED2, REDS, Raha)
+
+\paragraph{Flights}
+List of flight schedules
+Contains id, source of data (abbrev/site?), flight number alphanumeric with dashes, scheduled and actual departure and arrival times in XX:XX a.m. format
+\\(Source: ED2, REDS, Raha)
+
+\paragraph{Hospital}
+List of hospital experiments (Introduced errors)
+index, ProviderNumber, HospitalName, Address1, Address2, Address3, City, State, ZipCode, CountyName, PhoneNumber, HospitalType, HospitalOwner, EmergencyService, Condition, MeasureCode, MeasureName, Score, Sample, Stateavg
+\\(Source: REDS, Raha)
+
+\paragraph{Rayyan}
+List published articles
+id, article\_title, article\_language, journal\_title, jounral\_abbreviation, journal\_issn, article\_jvolumn, article\_jissue, article\_jcreated\_at, article\_pagination, author\_list
+\\(Source: REDS, Raha)
+
+\paragraph{Tax}
+List of american tax payers
+f\_name, l\_name, gender, area\_code, phone, city, state, zip, marital\_status, has\_child, salary, rate, single\_exemp, married\_exemp, child\_exemp
+\\(Source: REDS, Raha)
+
+\paragraph{Toy}
+Dummy set for testing purposes \& testing for generalizability
+\\(Source: REDS, Raha)
+
+\paragraph{Restaurants}
+List of restaurants
+id, name, streetAddress, city, state, zipCode, phone, website, priceRange, categories, ratingValue, neighborhood, payment-method, years-in-business, extra-phones, aka
+\\(Source: ED2)
+
+\paragraph{Restaurant}
+Same idea as "Restaurants", but less columns
+name, streetAddress, city, state, zipCode, telephone, website, priceRange, categories, ratingValue, neighborhood
+\\(Source: CleanML)
+
+\paragraph{Movies}
+List of popular movies
+Id, Name, Year, Release Date, Director, Creator, Actors, Cast, Language, Country, Duration, RatingValue, RatingCount, ReviewCount, Genre, Filming Locations, Description
+\\(Source: ED2, REDS, Raha)
+
+\paragraph{Movie}
+Same as movies, but less and different columns
+\\(Source: CleanML)
+
+\paragraph{University}
+This dataset contains 286 records about universities. Each record has 17 attributes including state, university name,
+SAT scores, etc. The classification task is to predict whether the expenses are greater than 7,000 for each university. This dataset contains inconsistent representations for states and locations.
+\\(Source: CleanML)
+
+\paragraph{Uscensus}
+This dataset contains 32,561 US Census records
+for adults. Each record has 14 attributes including age, education, sex, etc. The classification goal is to predict whether the adult earns more than \$50,000. This dataset contains missing values.
+\\(Source: CleanML)
+
+\paragraph{KDD}
+This dataset contains 131,329 records about projects and
+donations from DonorsChoose.org. Each record has 100 attributes.
+The classification task is to predict whether a project is “exciting”.
+This dataset has a class imbalance problem. There are 11% records
+in the minority class. This dataset contains missing values and numerical outliers. We inject mislabels into this dataset by randomly
+flip labels.
+\\(Source: CleanML)
+
+\paragraph{EEG}
+This is a dataset of 14,980 EEG recordings. Each record
+has 14 EEG attributes. The classification task is to predict whether
+the eye-state is closed or open. This dataset contains numerical outliers. We inject mislabels into this dataset by randomly flip labels
+\\(Source: CleanML)
+
+\paragraph{Company}
+List of companies
+Some sort of capture date, id, long \& lat, sentiment about it, Company Name, Country, City, State (non abbreviated)
+\\(Source: CleanML)
 
 \subsection{Tools}
 \label{subsec:tools}
@@ -124,5 +235,9 @@ A \textbf{knowledge base} and crowd powered data cleaning system that, given a t
 
 \subsubsection{ActiveClean \cite{Krishnan2016-rg}}
 
-\subsubsection{Adapted tools}
-\label{subsubsec:adaptedtools}
+% \subsubsection{Adapted tools}
+% \label{subsubsec:adaptedtools}
+
+\subsection{Execution \& Analysis}
+To answer research question 1; \textit{What is the current state of the art and what is the performance of these tools?}; The different parts from the sections above will be combined. The tools in section \ref{subsec:tools} will be run in selected configurations (tool specific) on all the datasets from section \ref{subsec:datasets}. The main metrics that will be kept are cell-wise precsion, recall and F1-score. In a single experiment, a timeout limit is set to filter out tool configuration that do not satisfy runtime needs. The results will be aggregated into showing the best results for a single tool (regardless of its configuration) and the target dataset. This will be shown in a table where the rows represent a single dataset, and each column represents a tool. Such a table will allow quick comparison to see which of the tools performs best for which dataset.
+\\Additionaly, these tables can be repeatedly be created with filters (such as no human interaction) or grouping the best scores per tool and dataset based on the selected metrics (i.e. best precision or best F1-score).

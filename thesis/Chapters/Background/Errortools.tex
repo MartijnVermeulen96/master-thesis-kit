@@ -1,0 +1,125 @@
+\section{Error detection tools}
+% Include most commonly used stuff
+In order to automatically identify incomplete, incorrect, inaccurate or irrelevant parts of the data, numerous methods have been proposed in research. First, different base error detection methods \& frameworks will be discussed that follow a single mechanism. In the second subsection, composite methods will be discussed that have state-of-the-art performance and incorporate some combination of different base techniques.
+
+\subsection{Error Detection Methods \& Frameworks}
+To start, the methods underlying most common methods will be discussed.
+
+%% Regex
+\paragraph{Regular expression violation}
+    % In research, it is done by hand
+    % Automatic Regex discovery
+In many error detection methods, some form of text pattern recognition is used to detect errors. This mostly comes down to verifying a regular expression (regex). It is an expression that describes a set of strings \cite{Mitkov2004-fz}. If a cell value in a relational dataset does not fit in this set describing these cells, it will be a violation of this regular expression. An example for this could be a column in a datasets which contains year values. A regex that would take correct 4 digit year values would be: \verb|^\d{4}$| (match only those strings that begin and end with 4 digits). 
+\\1996 would be a correct value, but 2oi9 would be a violation. 
+\\Despite the easy to understand workings of this method, it can be costly in terms of time and human expertise to derive these regular expressions by hand.
+Automatic regular expression inference is possible, for instance as proposed by \cite{Bartoli2016-hx}. This means that it is possible to learn the regular expression (if there is any), describing a column, or part of a text. This then could be used to find errors, as regular expression violations might indicate an error. But one must take into account that if a dataset contains many errors, the regular expression learned might be that of the erroneous values, possibly creating a faulty detection method.
+    
+%% (C)FDs
+\paragraph{(Conditional) Functional Dependency violation \& Denial Constraints}
+    % Keys/Formal definition of relations
+    % Automatic (C)FD detection
+        % Problem with erroneous data (finding approximate rules)
+In this part, (conditional) functional dependencies and denial constraints will be discussed. They are among the family of rules/constraints that are similar in the detection of violations, characteristics and approach of creating. The discussed methods are part of a non-exhaustive list of methods that could be used to find errors that are categorized as rule violations. 
+A functional dependency (FD) is a relationship between two attributes of a relational dataset. Meaning that values in a certain column will indicate what values in other columns will be. Given a functional dependency R, a set of attributes (a column) $X$ functionally determines another set of attributes (another column) $Y$, denoted as $X \rightarrow Y$. Each value of $X$ maps to another single value $Y$. So if there is a FD set on columns $Product$ and $Price$ in figure \ref{tab:functionaldependencyviol}, a violations occurs for product "Croissant", indicating that one of them must be an error.
+
+\begin{table}[]
+\centering
+\begin{tabular}{ll}
+\textbf{Product}   & \textbf{Price} \\ \hline
+\textit{Croissant} & \textit{\texteuro 2}    \\
+Baguette           & €3             \\
+\textit{Croissant} & \textit{€4}    \\
+Baguette           & €3            
+\end{tabular}
+\caption{A table with FD $Product \rightarrow Price$, with violations for product "Croissant"}
+\label{tab:functionaldependencyviol}
+\end{table}
+
+Conditional Functional Dependencies (CFDs) are an extension of FDs, where another condition must be met before the relation withholds. This allows greater configurability and the possibility of exceptions. Denial Constraints (DCs), as discussed in \cite{Chu2013-qe}, is another method to enforce correct application semantics to a database. It is allows more expressive language for defining rules, but still has enough structure to allow automatic discovery and to be usable. A DC states that all the predicates cannot be true at the same time, otherwise, it indicates a rule violation.
+
+Work by \cite{Asghar2015-yq} shows that there is a great number of automatic (conditional) functional dependency discovery tool. Also, newer work (\cite{Rammelaere2019-ps}) still dedicates energy to finding, optimizing and comparing new methods. Similar to finding regular expressions, manually creating rules in the form of dependencies of constraints can be costly. Most automatic discovery tools however rely on data without too many errors. This introduces difficulties for detecting errors in datasets with bad data quality. 
+
+%% NADEEF
+\paragraph{NADEEF \cite{Dallachiesa2013-he}} is data cleaning tool that allows has a programming interface where users can define different types of data quality rules about both their static semantics and dynamic semantics, and a core that implements algorithms to detect and repair dirty data by treating multiple types of quality rules holistically. It is a commonly used tool to detect data errors in research. Especially when certain (C)FDs are known, they are easily implementable and NADEEF has been proven to be effective. However, for this research and as this tool requires manually programmed rules, this tool is not suited for standalone error detection.
+
+
+%% dBoost
+\paragraph{dBoost \cite{Pit--Claudel2016-dj}} is "Outlier Detection in Heterogeneous Datasets using Automatic Tuple Expansion". This works demonstrates the expansion of data tuples using knowledge about the schema and field types. For example, a timestamp 1424866716 could be expanded into year 2015, Wednesday, etc.. Then using statistical analysis of these expansions, the data is modeled using machine-learning algorithms (Histograms, Gaussian, and Mixtures). Whenever a part of the tuple expansion does not lie in data model for a certain user-defined threshold, the entry is flagged as an outlier.
+
+
+
+%% FAHES
+\paragraph{FAHES \cite{Qahtan2018-te}} is a disguised missing values detector. Whereas most missing value detector focus only on NULL or empty values, this tool takes a different approach. They categorize detectable disguided missing values into five different cases: 
+\begin{enumerate}
+    \item Out of range data values
+    \item Outliers
+    \item String with repeated characters or characters that are next to each other on the used keyboard
+    \item Values with non-conforming data types
+    \item Valid values that are randomly distributed within the range of the data and used frequently in the data set
+\end{enumerate}
+
+Cases 1-4 can be treated as outliers, whereas case 5 is an inlier in the data distribution. 
+The research shows detection using syntactic outliers where the syntactic pattern are discovered. By comparing pattern frequencies and checking for repeated patterns (for example pushing the same key over and over again), possible disguised missing values can be found. The research also proposes a more simple density based numeric outlier detection method. Lastly, detecting errors as inliers in statistical models is proposed. Following two statistical missing value models, MCAR (missing-completely-at-random) and MAR (missing-at-random), detecting the values that replace the missing values and used frequently could be achieved by removing one of the frequent values in a given attribute and testing if the resulting missing cells follow either models.
+
+%% ForbiddenItemSets
+\paragraph{Forbidden Itemsets \cite{Rammelaere2019-ea}} applies constraint-like method to detect and repair invalid entries in a dataset. However, it assume real-world scenarios, where constraints or rules specifying when data is dirty are not available. The proposed so-called forbidden itemsets capture unlikely value co-occurrences, similar to denial constraints. Experiments show high precision on detected errors. However, one main requirement is that a large body of clean data is needed to detect forbidden value combinations: if most of the data is dirty, inconsistencies are no longer “unlikely”, and errors will not be considered forbidden. 
+
+%% HoloClean
+\paragraph{HoloClean \cite{Rekatsinas2017-iw}}
+\todo{Nog een samenvatting maken}
+
+%% HoloClean
+\paragraph{ActiveClean \cite{Krishnan2016-va}}
+\todo{Nog een samenvatting maken}
+
+%% KATARA
+\paragraph{KATARA \cite{Chu2015-fs}}
+The challenges tackled in this research are that:
+\begin{itemize}
+    \item Matching (dirty) tables to knowledge bases is a hard problem
+    \item Knowledge bases are usually incomplete in terms of coverage of values in the table
+    \item Human involvement is needed to validate matchings and to verify data when the knowledge-bases do not have enough coverage
+\end{itemize}
+The following contributions are made in this research:
+\begin{itemize}
+    \item Table pattern definition and discovery
+    \item Table pattern validation via crowdsourcing
+    \item Data annotation
+\end{itemize}
+
+% Llunatic
+% Knime
+% OpenRefine
+% Pentaho
+% DC-Clean
+% Trifacta
+% Data Tamer/TAMR
+% SCARE
+% BoostClean
+% Uni-Detect
+% ActiveClean
+
+\subsection{Composite methods}
+% Show what is most promising
+Combining all these different base techniques, the following methods proposed in research use a combination of previous knowledge to achieve state of the art error detection performance. 
+
+% Auto-Detect
+\paragraph{Auto-Detect (\cite{Wang2019-jg})} is a data-driven error detection approach (very similar to another recent tool Uni-Detect \cite{Huang2018-er}, but Auto-Detect outperforms Uni-Detect). It uses a large corpus consisting of 100M web tables extracted from a commercial search engine. Because it is extracted from a commercial search engine, the data quality is expected to be high. It tries to learn about the four common classes of errors. It performs single-column error detection and creates a generalization tree to translate actual values to patterns to compare. This tool however needs a specific corpus related to the subject dataset. While this tool performs really well in its own tests, it is not tested on common benchmark datasets. Also, the implementation of this tool is not available publicly.
+
+% Metadata-driven error detection (DetectEr)
+\paragraph{Metadata-Driven Error Detection \cite{Visengeriyeva2018-qz}} makes use of combining different algorithms by either bagging or stacking, and adds content-based metadata to the features to enhance error detection classification. Augmenting system features with automatically generated metadata information will improve the error predicting outcome. This insight might help future work. The base error detection strategies in the ensemble learning methods need to be chosen and configured by hand, which is again a hard process. Also, this work has not been developed any further for a few months and other methods outperform this now.
+
+% HoloDetect
+\paragraph{HoloDetect \cite{Heidari2019-ox}} is a few-shot learning framework for error detection that uses data augmentation to create more synthetic training examples resulting in high performance. It also has an expressive model to learn representations and syntactic and semantic differences in errors. This work uses a lot of feature engineering fed into a neural network. Feature engineering is hard and might influence the performance, especially because the exact implementation is not public. Also, depending on the amount of training time and samples, this method varies in performance. One other note is that the released $F_1$ scores are not calculated correctly for some of their tests, making HoloDetect come out on top every time, whereas it would not have been the best. The key takeaway is that data augmentation could solve the imbalanced data problem and even outperforms active learning methods, reducing human efforts. 
+
+% UGuide
+\paragraph{UGuide \cite{Thirumuruganathan2017-ip}} is an interactive tool that detects the set of functional dependency detectable errors under a fixed human effort budget. This work has a good focus on the human budget in data cleaning. One downside of this research is that all the errors were synthetically generated using BART (\cite{Arocena2015-om}). It would be interesting to see if finding FDs will still be possible with highly erroneous datasets. It asks the user to verify tuple-based, fd-based and cell-based questions about the validity of dependencies. However, only using functional dependencies is not expressive enough to tackle the whole error detection problem, but the methodology of this work gave extra insights especially on human budget.
+
+
+% Raha
+\paragraph{Raha \cite{Mahdavi2019-zf}} is a configuration-free error detection system. Using the data profiles like in REDS \cite{Mahdavi2019-pk}, it selects different preconfigured strategies automatically, based on previously cleaned datasets. Then, it incorporates the outputs from various error detection strategies as a feature vector for the error detection task. 
+Using these feature vectors, it creates clusters of which samples will be labeled in order to reduce user involvement. Drawbacks could be that information might get lost in the stacking process. Also, the (time) complexity of this tool increases vastly when adding more base learners.
+
+% ED2
+\paragraph{ED2 \cite{Neutatz2019-aw}} or Example-Driven Error Detection, is a machine learning based error detection technique that also makes use of active human labeling. 
+Like HoloDetect \cite{Heidari2019-ox}, it creates features that cover information on the attribute, tuple (across attributes), and dataset level for each data cell of the dataset. It iteratively selects columns that will be sampled from, humanly labeled and propagated using different strategies. The main contribution is the effective selection of columns, reducing the user input effort by selecting columns \& cells to be labeled, that will have the most positive impact on the learning. As with all active learning tools, the drawback is the human interaction. The amount of examples needed to be labeled by the user differ vastly. Also, no confidence intervals are given for the performance metrics, making it unsure what the worst case performance will be. 

@@ -1,0 +1,96 @@
+\section{Empirical study}
+
+\paragraph{Specs}
+All the experiments were run on 
+Experiments were run on a computer with an Intel Core i7 8750H processor using 16 GB of RAM, running Ubuntu 18.04 as Windows Subsystem for Linux 2. % running at 2.20 GHz base, 4.1 GHz max 
+The max runtime for a single experiment was limited at 1800 seconds (half hour). A timeout error would occur after that and the experiment would be canceled. 
+
+
+
+\subsection{Error detection tool configurations}
+% Per tool hoeveel configuraties
+% Welke hoofd ideeën
+
+
+\subsection{Results}
+
+\begin{table}[h]
+\centering
+\caption{|Precision Recall F1-score| for tool as column \& dataset as row}
+\begin{adjustbox}{center}
+\begin{tabular}{lllllll}
+\toprule
+{} &                 ActiveClean &                               FAHES &           ForbiddenItemSets &              KATARA &                                        Raha &                                      dBoost \\
+\midrule
+beers       &  0.16  \textbf{1.00} 0.28   &                  0.83  0.02  0.04   &          0.34  0.30  0.32   &  0.14  0.26  0.18   &          \textbf{0.97} 0.69  \textbf{0.80}  &                          0.68  0.55  0.61   \\
+eeg         &  0.95  \textbf{1.00} 0.98   &                  0.00  0.00  0.00   &  \textbf{0.96} 0.40  0.57   &  0.00  0.00  0.00   &          0.96  \textbf{1.00} \textbf{0.98}  &                          0.95  1.00  0.98   \\
+flights     &  0.34  \textbf{0.87} 0.49   &                  0.23  0.01  0.02   &          0.56  0.16  0.24   &  0.09  0.09  0.09   &                  0.90  0.83  \textbf{0.86}  &                  \textbf{0.94} 0.59  0.72   \\
+hospital    &          0.03  0.47  0.05   &                  0.02  0.09  0.04   &          0.01  0.06  0.02   &  0.08  0.37  0.13   &  \textbf{0.98} \textbf{0.57} \textbf{0.72}  &                          0.03  0.43  0.06   \\
+kdd         &  0.78  \textbf{1.00} 0.88   &                  0.67  0.07  0.13   &                Timeout 1800 &  0.70  0.13  0.22   &          \textbf{0.98} 0.80  \textbf{0.88}  &                          0.95  0.42  0.58   \\
+movie       &          0.11  0.97  0.20   &                  0.00  0.00  0.00   &          0.05  0.14  0.07   &  0.28  0.98  0.43   &          \textbf{1.00} 1.00  \textbf{1.00}  &                  0.35  \textbf{1.00} 0.52   \\
+movies      &          0.03  0.01  0.02   &                  0.01  0.10  0.02   &          0.01  0.06  0.01   &  0.02  0.16  0.03   &  \textbf{0.72} \textbf{0.76} \textbf{0.74}  &                          0.01  0.09  0.03   \\
+rayyan      &  0.09  \textbf{1.00} 0.16   &                  0.07  0.04  0.05   &                 Other error &  0.01  0.02  0.01   &          \textbf{0.86} 0.84  \textbf{0.85}  &                          0.22  0.77  0.34   \\
+restaurant  &  0.01  \textbf{0.83} 0.02   &                  0.00  0.00  0.00   &          0.01  0.07  0.01   &  0.00  0.13  0.01   &          \textbf{0.14} 0.11  \textbf{0.12}  &                          0.03  0.03  0.03   \\
+restaurants &          0.00  0.00  0.00   &  \textbf{0.00} 0.07  \textbf{0.01}  &                 Other error &  0.00  0.22  0.00   &                  0.00  \textbf{1.00} 0.00   &                          0.00  0.08  0.00   \\
+toy         &                 Other error &                  0.00  0.00  0.00   &          0.00  0.00  0.00   &  0.21  0.75  0.33   &                  0.22  \textbf{1.00} 0.36   &  \textbf{0.38} \textbf{1.00} \textbf{0.50}  \\
+university  &          0.03  0.59  0.06   &                         Other error &                 Other error &  0.06  0.29  0.10   &          \textbf{0.99} 0.91  \textbf{0.95}  &                  0.32  \textbf{1.00} 0.49   \\
+uscensus    &  0.57  \textbf{1.00} 0.73   &                  0.49  0.15  0.23   &          0.77  0.35  0.48   &  0.69  0.25  0.36   &                  \textbf{0.85} 0.78  0.82   &                  0.85  0.86  \textbf{0.85}  \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+\begin{table}[h]
+\centering
+\caption{|Precision Recall F1-score| for tool as column \& dataset as row \textbf{without human interaction}}
+\begin{adjustbox}{center}
+\begin{tabular}{lllllll}
+\toprule
+{} &                               FAHES &           ForbiddenItemSets &                              KATARA &                                Raha &                                      dBoost \\
+\midrule
+beers       &          \textbf{0.83} 0.02  0.04   &          0.34  0.30  0.32   &                  0.14  0.26  0.18   &          0.16  \textbf{1.00} 0.28   &                  0.68  0.55  \textbf{0.61}  \\
+eeg         &                  0.00  0.00  0.00   &  \textbf{0.96} 0.40  0.57   &                  0.00  0.00  0.00   &  0.95  \textbf{1.00} \textbf{0.98}  &                          0.95  1.00  0.98   \\
+flights     &                  0.23  0.01  0.02   &          0.56  0.16  0.24   &                  0.09  0.09  0.09   &          0.30  \textbf{1.00} 0.46   &          \textbf{0.94} 0.59  \textbf{0.72}  \\
+hospital    &                  0.02  0.09  0.04   &          0.01  0.06  0.02   &  \textbf{0.08} 0.37  \textbf{0.13}  &          0.03  \textbf{1.00} 0.05   &                          0.03  0.43  0.06   \\
+kdd         &                  0.67  0.07  0.13   &                Timeout 1800 &                  0.70  0.13  0.22   &  0.78  \textbf{1.00} \textbf{0.88}  &                  \textbf{0.95} 0.42  0.58   \\
+movie       &                  0.00  0.00  0.00   &          0.05  0.14  0.07   &                  0.28  0.98  0.43   &          0.06  \textbf{1.00} 0.12   &  \textbf{0.35} \textbf{1.00} \textbf{0.52}  \\
+movies      &                  0.01  0.10  0.02   &          0.01  0.06  0.01   &  \textbf{0.02} 0.16  \textbf{0.03}  &          0.01  \textbf{1.00} 0.02   &                          0.01  0.09  0.03   \\
+rayyan      &                  0.07  0.04  0.05   &                 Other error &                  0.01  0.02  0.01   &          0.09  \textbf{1.00} 0.16   &          \textbf{0.22} 0.77  \textbf{0.34}  \\
+restaurant  &                  0.00  0.00  0.00   &          0.01  0.07  0.01   &                  0.00  0.13  0.01   &          0.00  \textbf{1.00} 0.01   &          \textbf{0.03} 0.03  \textbf{0.03}  \\
+restaurants &  \textbf{0.00} 0.07  \textbf{0.01}  &                 Other error &                  0.00  0.22  0.00   &          0.00  \textbf{1.00} 0.00   &                          0.00  0.08  0.00   \\
+toy         &                  0.00  0.00  0.00   &          0.00  0.00  0.00   &                  0.21  0.75  0.33   &          0.22  \textbf{1.00} 0.36   &  \textbf{0.38} \textbf{1.00} \textbf{0.50}  \\
+university  &                         Other error &                 Other error &                  0.06  0.29  0.10   &          0.03  \textbf{1.00} 0.05   &  \textbf{0.32} \textbf{1.00} \textbf{0.49}  \\
+uscensus    &                  0.49  0.15  0.23   &          0.77  0.35  0.48   &                  0.69  0.25  0.36   &          0.57  \textbf{1.00} 0.73   &          \textbf{0.85} 0.86  \textbf{0.85}  \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\subsubsection{Human interaction}
+% What if the best tool has 0.95 human expertise?
+
+\begin{table}
+\centering
+\caption{|Precision Recall F1-score| for tool as column \& dataset as row}
+\begin{tabular}{lll}
+\toprule
+{} &                                      Raha 1 &                   Raha 0.75 \\
+\midrule
+beers       &          \textbf{0.97} 0.69  \textbf{0.80}  &          0.70  0.81  0.75   \\
+eeg         &          0.96  \textbf{1.00} \textbf{0.98}  &  \textbf{0.98} 0.91  0.94   \\
+flights     &                  0.90  0.83  \textbf{0.86}  &          0.60  0.73  0.66   \\
+hospital    &  \textbf{0.98} \textbf{0.57} \textbf{0.72}  &          0.09  0.54  0.15   \\
+kdd         &                  0.98  0.80  \textbf{0.88}  &  \textbf{0.99} 0.08  0.14   \\
+movie       &          \textbf{1.00} 1.00  \textbf{1.00}  &  0.41  \textbf{1.00} 0.59   \\
+movies      &  \textbf{0.72} \textbf{0.76} \textbf{0.74}  &          0.06  0.42  0.10   \\
+rayyan      &          \textbf{0.86} 0.84  \textbf{0.85}  &                             \\
+restaurant  &          \textbf{0.14} 0.11  \textbf{0.12}  &                             \\
+restaurants &                  0.00  \textbf{1.00} 0.00   &                             \\
+toy         &                  0.22  \textbf{1.00} 0.36   &                             \\
+university  &          \textbf{0.99} 0.91  \textbf{0.95}  &                             \\
+uscensus    &                  \textbf{0.85} 0.78  0.82   &                             \\
+\bottomrule
+\end{tabular}
+\end{table}
