@@ -8,7 +8,7 @@ A regression model is trained for every strategy (error tool and specific config
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\textwidth]{thesis/Figures/EachStrategy.png}
+	\includegraphics[width=0.8\textwidth]{thesis/Figures/Method/PerformanceEstimation-OnlyEstimate.pdf}
 	\caption{Each strategy will result in a separate estimator}
 	\label{fig:eachstrategy}
 \end{figure}
@@ -19,55 +19,46 @@ The data profiles are created using only top-level features, without having any 
 
 \begin{table}[H]
 \centering
+\begin{adjustbox}{center}
 	\begin{tabular}{lll}
 		Feature                   & Type       & Description \\ \hline
-		characters\_unique        & characters &             \\
-		characters\_alphabet      & characters &             \\
-		characters\_numeric       & characters &             \\
-		characters\_punctuation   & characters &             \\
-		characters\_miscellaneous & characters &             \\
-		words\_unique             & words      &             \\
-		words\_alphabet           & words      &             \\
-		words\_numeric            & words      &             \\
-		words\_punctuation        & words      &             \\
-		words\_miscellaneous      & words      &             \\
-		words\_length             & words      &             \\
-		cells\_unique             & cells      &             \\
-		cells\_alphabet           & cells      &             \\
-		cells\_numeric            & cells      &             \\
-		cells\_punctuation        & cells      &             \\
-		cells\_miscellaneous      & cells      &             \\
-		cells\_length             & cells      &             \\
-		cells\_null               & cells      &             
+		characters\_unique        & characters & The number of unique characters \\
+		characters\_alphabet      & characters & The number of only alphabetical characters \\
+		characters\_numeric       & characters & The number of only numerical characters \\
+		characters\_punctuation   & characters & The number of punctuation characters \\
+		characters\_miscellaneous & characters & The number of characters not included in the categories above \\
+		words\_unique             & words      & The number of unique words \\
+		words\_alphabet           & words      & The number of fully alphabetical words \\
+		words\_numeric            & words      & The number of fully numerical words (decimals included) \\
+		words\_punctuation        & words      & The number of characters used solely as punctuation \\
+		words\_miscellaneous      & words      & The number of words not included in the categories above  \\
+		words\_length             & words      & The average word length \\
+		cells\_unique             & cells      & The number of unique cells \\
+		cells\_alphabet           & cells      & The number of completely alphabetical cells \\
+		cells\_numeric            & cells      & The number of fully numerical cells (decimals included) \\
+		cells\_punctuation        & cells      & The number of cells with only punctuation characters \\
+		cells\_miscellaneous      & cells      & The number of cells not included in the categories above\\
+		cells\_length             & cells      & The total length of cells combined \\
+		cells\_null               & cells      &  The number of empty cells 
 	\end{tabular}
-	\caption{All extracted features for the dataset profiles}
+	\end{adjustbox}
+	\caption{All column-wise extracted features for the dataset profiles}
 	\label{tab:profilefeatures}
 \end{table}
-\todo{Add descriptions}
 
 \subsection{Experimental setup}
 %%% Leave-one-out training
 % Real performance dataframe
 % Estimation performance dataframe
 % Calculate errors
-To discover whether the discussed data profiles are useful in estimating the performance of error detection tools, the setup from section \ref{sec:empiricalstudy} is updated. Figure \ref{fig:estimateperformance_a} shows the training and testing part of the prediction. A data profile is extracted from 
-Figure \ref{fig:estimateperformance_b} shows the goal of the estimation, where a new dataset is introduced, and the experimental part will be skipped altogether. The predictions of the experiment results will then be shown without having to run the actual tools.
+To discover whether the discussed data profiles are useful in estimating the performance of error detection tools, the setup from section \ref{sec:empiricalstudy} is updated. Figure \ref{fig:method_estimation} shows the flow of estimating the performance scores of the run error detection tools on the datasets. The goal of this workflow is to estimate the performance scores of error detection strategies on unseen datasets.
 
 
 \begin{figure}%[h]
 	\centering
-	\begin{subfigure}[b]{\textwidth}
-		\includegraphics[width=1\linewidth]{thesis/Figures/PerformanceEstimation-Estimation.png}
-		\caption{}
-		\label{fig:estimateperformance_a} 
-	\end{subfigure}
-	
-	\begin{subfigure}[b]{\textwidth}
-		\includegraphics[width=1\linewidth]{thesis/Figures/PerformanceEstimation-Skip_real_run.png}
-		\caption{}
-		\label{fig:estimateperformance_b}
-	\end{subfigure}
-	\caption{Experiment result estimation}
+	\includegraphics[width=0.9\textwidth]{thesis/Figures/Method/PerformanceEstimation-Profiler.pdf}
+	\caption{Performance scores estimation}
+	\label{fig:method_estimation}
 \end{figure}
 
 The estimators will be created as scikit-learn (\cite{Pedregosa2011-su}) pipelines. Not only does this allow interchangeable regression models, but also configurable data preparation. The different configurable parts all have certain assumptions. Because the underlying ideas behind the data profiles are not known, a power set (combinination of all possible settings), minus the unfeasible configurations will be created and ran as estimator. 

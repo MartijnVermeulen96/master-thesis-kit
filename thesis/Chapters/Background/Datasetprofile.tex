@@ -18,15 +18,8 @@ Using all these tools with the purpose of error detection, could give insight on
 
 %% Profiling relational data: a survey
 \paragraph{Profiling relational data: a survey (\cite{Abedjan2015-ul})} 
-Goes with a focus on determining metadata about a given dataset. One of the insights is on the challenges of data profiling: (i) managing the input, (ii) performing the computation, and (iii) managing the output. For different input shapes and types, some certain transformation will be done beforehand. Also computing the different steps of data profiling might differ based on different content types, schemas or even completely different documents. Then managing the output to be useful for a specific task is a challenge on itself. Depending on the task, limitations on the output can be existing. 
-
-% Use case: Database reverse engineering
-% Data quality / data cleansing
-% Profiler: integrated statistical analysis and visualization for data quality assessment
-%  Pipino, L., Lee, Y., Wang, R.: Data quality assessment. Commun
-\todo{Nog doen, zitten}
-
-% Automatic dependency discovery
-% Multicolumn - single column
-
-% Machine Learning techniques for regression/clustering
+Goes with a focus on determining metadata about a given dataset. One of the insights is on the challenges of data profiling: (i) managing the input, (ii) performing the computation, and (iii) managing the output. For different input shapes and types, some certain transformation will be done beforehand. Also computing the different steps of data profiling might differ based on different content types, schemas or even completely different documents. Then managing the output to be useful for a specific task is a challenge on itself. Depending on the task, limitations on the output can be existing. In the case of this thesis, the output must be homogeneous, in order to be used for a machine learning task. 
+This limitation of fixed output, limits the possible profiling tasks that can be done or used in further calculations. According this work, data profiling can be split up in 3 types: single column profiling, multiple columns profiling and dependencies profiling. 
+Single-column profiling has different tasks that can be directly converted to quantitative input features for a machine learning task. Examples of tasks are finding the number of null values, number of distinct values or calculating the percentage of cells that are of a number data type. These tasks can be executed with a single pass over the data, making the time complexity linear. 
+Multi-column (for example clustering of rows) and dependencies (for example number of functional dependencies) profiling can be also aggregated to fixed numerical outputs. However, the main drawback of these techniques are the higher computational costs. These costs make the profiling methods less favored than the single-column profiling tasks.
+So the main take-away from this work will be that there are different usable single-column profiling tasks that can be aggregated to fixed quantitative outputs usable for machine learning.

@@ -2,7 +2,14 @@
 \section{Interpretability of tools}
 \label{sec:interpretabilityoftools}
 The prediction of performance of error detection tools gives another research direction, namely the dissection of this prediction.
-Based on section \ref{sec:performanceprediction} and \ref{sec:toolranking}, with a set of input features and output values in the two tasks, the regression models can be analyzed to "explain" the inner workings of tools. Using feature importance identification methods depending on the specific regressor or general importance methods, the "weight" of a certain feature of the data profile can be translated to the performance of a certain tool with a specific configuration. The importance of features for each strategy can than be analyzed, to see if they correspond with the underlying techniques in these methods. If there are matches and mismatches, try to find why the misalignment occurs and see if improvements can be suggested for the error detection tools.
+Based on section \ref{sec:performanceprediction} and \ref{sec:toolranking}, with a set of input features and output values in the two tasks, the regression models can be analyzed to "explain" the inner workings of tools. Using feature importance identification methods depending on the specific regressor or general importance methods, the "weight" of a certain feature of the data profile can be translated to the performance of a certain tool with a specific configuration. The importance of features for each strategy can than be analyzed, to see if they correspond with the underlying techniques in these methods. If there are matches and mismatches, try to find why the misalignment occurs and see if improvements can be suggested for the error detection tools. A visual representation of making the error detection models interpretable, is shown in figure \ref{fig:method_interpret}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/Method/PerformanceEstimation-Interpretability.pdf}
+    \caption{Adding interpretability into the flow of error detection}
+    \label{fig:method_interpret}
+\end{figure}
 
 \subsection{Feature selection}
 \label{subsec:featureselection}

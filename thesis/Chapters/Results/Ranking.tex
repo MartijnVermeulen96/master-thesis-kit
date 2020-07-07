@@ -1,6 +1,38 @@
 \section{Ranking}
-\subsection{Precision ranking}
+To answer research question 3: \textit{Is it possible to generate a ranking of tools according to their performance on unseen datasets?}; the estimators from the previous section will be used to give an estimated ranking for best strategies that could be used on that dataset.
 
-\subsection{Recall ranking}
+\subsection{Best tool ranking}
 
-\subsection{Combined F1-score ranking}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{thesis/Figures/RQ3/15_ranking_ndcg_combined_f1.pdf}
+    \caption{NDCG per dataset for strategy ranking of the combined F1 estimator}
+    \label{fig:ndcg_per_strategy}
+\end{figure}
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{}
+    \caption{NDCG per dataset for tool ranking of the combined F1 estimator}
+    \label{fig:ndcg_per_tool}
+\end{figure}
+
+
+
+\subsection{Best configuration ranking}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{thesis/Figures/RQ3/15_combined_profiler_NDCG_Raha.pdf}
+    \caption{NDCG per dataset for configuration ranking of the combined F1 estimator for Raha}
+    \label{fig:ndcg_per_config_Raha}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{thesis/Figures/RQ3/15_combined_profiler_NDCG_dBoost.pdf}
+    \caption{NDCG per dataset for configuration ranking of the combined F1 estimator for dBoost}
+    \label{fig:ndcg_per_config_dBoost}
+\end{figure}

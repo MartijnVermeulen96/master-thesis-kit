@@ -40,16 +40,16 @@ Conditional Functional Dependencies (CFDs) are an extension of FDs, where anothe
 Work by \cite{Asghar2015-yq} shows that there is a great number of automatic (conditional) functional dependency discovery tool. Also, newer work (\cite{Rammelaere2019-ps}) still dedicates energy to finding, optimizing and comparing new methods. Similar to finding regular expressions, manually creating rules in the form of dependencies of constraints can be costly. Most automatic discovery tools however rely on data without too many errors. This introduces difficulties for detecting errors in datasets with bad data quality. 
 
 %% NADEEF
-\paragraph{NADEEF \cite{Dallachiesa2013-he}} is data cleaning tool that allows has a programming interface where users can define different types of data quality rules about both their static semantics and dynamic semantics, and a core that implements algorithms to detect and repair dirty data by treating multiple types of quality rules holistically. It is a commonly used tool to detect data errors in research. Especially when certain (C)FDs are known, they are easily implementable and NADEEF has been proven to be effective. However, for this research and as this tool requires manually programmed rules, this tool is not suited for standalone error detection.
+\paragraph{NADEEF (\cite{Dallachiesa2013-he})} is data cleaning tool that allows has a programming interface where users can define different types of data quality rules about both their static semantics and dynamic semantics, and a core that implements algorithms to detect and repair dirty data by treating multiple types of quality rules holistically. It is a commonly used tool to detect data errors in research. Especially when certain (C)FDs are known, they are easily implementable and NADEEF has been proven to be effective. However, for this research and as this tool requires manually programmed rules, this tool is not suited for standalone error detection.
 
 
 %% dBoost
-\paragraph{dBoost \cite{Pit--Claudel2016-dj}} is "Outlier Detection in Heterogeneous Datasets using Automatic Tuple Expansion". This works demonstrates the expansion of data tuples using knowledge about the schema and field types. For example, a timestamp 1424866716 could be expanded into year 2015, Wednesday, etc.. Then using statistical analysis of these expansions, the data is modeled using machine-learning algorithms (Histograms, Gaussian, and Mixtures). Whenever a part of the tuple expansion does not lie in data model for a certain user-defined threshold, the entry is flagged as an outlier.
+\paragraph{dBoost (\cite{Pit--Claudel2016-dj})} is "Outlier Detection in Heterogeneous Datasets using Automatic Tuple Expansion". This works demonstrates the expansion of data tuples using knowledge about the schema and field types. For example, a timestamp 1424866716 could be expanded into year 2015, Wednesday, etc.. Then using statistical analysis of these expansions, the data is modeled using machine-learning algorithms (Histograms, Gaussian, and Mixtures). Whenever a part of the tuple expansion does not lie in data model for a certain user-defined threshold, the entry is flagged as an outlier.
 
 
 
 %% FAHES
-\paragraph{FAHES \cite{Qahtan2018-te}} is a disguised missing values detector. Whereas most missing value detector focus only on NULL or empty values, this tool takes a different approach. They categorize detectable disguided missing values into five different cases: 
+\paragraph{FAHES (\cite{Qahtan2018-te})} is a disguised missing values detector. Whereas most missing value detector focus only on NULL or empty values, this tool takes a different approach. They categorize detectable disguided missing values into five different cases: 
 \begin{enumerate}
     \item Out of range data values
     \item Outliers
@@ -62,30 +62,17 @@ Cases 1-4 can be treated as outliers, whereas case 5 is an inlier in the data di
 The research shows detection using syntactic outliers where the syntactic pattern are discovered. By comparing pattern frequencies and checking for repeated patterns (for example pushing the same key over and over again), possible disguised missing values can be found. The research also proposes a more simple density based numeric outlier detection method. Lastly, detecting errors as inliers in statistical models is proposed. Following two statistical missing value models, MCAR (missing-completely-at-random) and MAR (missing-at-random), detecting the values that replace the missing values and used frequently could be achieved by removing one of the frequent values in a given attribute and testing if the resulting missing cells follow either models.
 
 %% ForbiddenItemSets
-\paragraph{Forbidden Itemsets \cite{Rammelaere2019-ea}} applies constraint-like method to detect and repair invalid entries in a dataset. However, it assume real-world scenarios, where constraints or rules specifying when data is dirty are not available. The proposed so-called forbidden itemsets capture unlikely value co-occurrences, similar to denial constraints. Experiments show high precision on detected errors. However, one main requirement is that a large body of clean data is needed to detect forbidden value combinations: if most of the data is dirty, inconsistencies are no longer “unlikely”, and errors will not be considered forbidden. 
+\paragraph{Forbidden Itemsets (\cite{Rammelaere2019-ea})} applies constraint-like method to detect and repair invalid entries in a dataset. However, it assume real-world scenarios, where constraints or rules specifying when data is dirty are not available. The proposed so-called forbidden itemsets capture unlikely value co-occurrences, similar to denial constraints. Experiments show high precision on detected errors. However, one main requirement is that a large body of clean data is needed to detect forbidden value combinations: if most of the data is dirty, inconsistencies are no longer “unlikely”, and errors will not be considered forbidden. 
 
-%% HoloClean
-\paragraph{HoloClean \cite{Rekatsinas2017-iw}}
-\todo{Nog een samenvatting maken}
+% %% HoloClean
+% \paragraph{HoloClean \cite{Rekatsinas2017-iw}}
+% \todo{Nog een samenvatting maken}
 
-%% HoloClean
-\paragraph{ActiveClean \cite{Krishnan2016-va}}
-\todo{Nog een samenvatting maken}
+%% ActiveClean
+\paragraph{ActiveClean (\cite{Krishnan2016-va})} is a general purpose error detection tool. Using interactive human labeling, it iteratively trains a machine learning model to specify between clean and dirty data entries. Because the proposed method is using a generalized featurizer, the method can be used for different data cleaning problems, not only for relational data cleaning. But, in order to use it for relational data, each cell needs to be converted to a set of numerical input features using a user-defined featurizer. In both academics and  A predictive model will then be trained on these numerical features, for every step in the process. After each step, the training and test set will be updated, in the traditional active learning way, sampling from both the most certain predictions and the human labeling input. This will continue until all input cells are classified with high probability or labeled by a human, or some pre-defined human sampling budget is reached.
 
 %% KATARA
-\paragraph{KATARA \cite{Chu2015-fs}}
-The challenges tackled in this research are that:
-\begin{itemize}
-    \item Matching (dirty) tables to knowledge bases is a hard problem
-    \item Knowledge bases are usually incomplete in terms of coverage of values in the table
-    \item Human involvement is needed to validate matchings and to verify data when the knowledge-bases do not have enough coverage
-\end{itemize}
-The following contributions are made in this research:
-\begin{itemize}
-    \item Table pattern definition and discovery
-    \item Table pattern validation via crowdsourcing
-    \item Data annotation
-\end{itemize}
+\paragraph{KATARA (\cite{Chu2015-fs})} is a knowledge base powered error detection tool. It is capable of table pattern definition, discovery and validation using a combination of knowledge bases like DBpedia (\cite{Auer2007-ie}) and crowdsourced human labeling. In this research, only knowledge bases are used as a source to find errors. The main problem KATARA can tackle is finding approximate table patterns and relations. Knowledge bases are considered RDF-based data consisting of resources, whose schema is defined using the Resource Description Framework Schema (RDFS). A resource in this schema is any real-world entity. The RDF-based data then describes the relation between different resources, for a specific domain. Take for example the resources in the domains of countries and cities. The two resources respectively could be \verb|France| and \verb|Paris|. A knowledge base entry could then describe the relation \verb|hasCapital|, with a specific entry \verb|hasCapital(France, Paris)|. KATARA passes through all columns and finds the overlap of that column for a specific resource. If a column is covered for a certain threshold by a resource, then it is supposed to be that type. So if a large part of a column matches country resources (not necessarily all) and another matches cities, KATARA will treat the relation between the columns as a functional dependency defined by the relation \verb|hasCapital|. All pairs that do not match this functional dependency will be marked erroneous. 
 
 % Llunatic
 % Knime
@@ -97,7 +84,6 @@ The following contributions are made in this research:
 % SCARE
 % BoostClean
 % Uni-Detect
-% ActiveClean
 
 \subsection{Composite methods}
 % Show what is most promising

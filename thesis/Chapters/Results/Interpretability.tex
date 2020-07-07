@@ -1,4 +1,88 @@
 \section{Interpretability}
 \subsection{Feature selection}
 
+% Permutation importance feature selection
+
+% SHAP feature selection
+
 \subsection{Feature importance}
+
+----
+
+\paragraph{FAHES}
+
+Niet van toepassing
+
+-----
+
+\paragraph{ForbiddenItemSets}
+
+Niet van toepassing
+
+------------
+
+\paragraph{ActiveClean}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llr}
+\toprule
+ \# &                         Feature &         Influence \\
+\midrule
+ 1 &         cells\_length\_variance &  -0.48 $\searrow$ \\
+ 2 &  characters\_alphabet\_variance &  -0.53 $\searrow$ \\
+ 3 &   characters\_numeric\_variance &   0.42 $\nearrow$ \\
+\bottomrule
+\end{tabular}
+\caption{}
+\end{table}
+
+
+\paragraph{KATARA}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llr}
+\toprule
+ \# &                         Feature &         Influence \\
+\midrule
+ 1 &         cells\_length\_variance &  -0.16 $\searrow$ \\
+ 2 &  characters\_alphabet\_variance &  -0.09 $\searrow$ \\
+ 3 &   characters\_numeric\_variance &   0.36 $\nearrow$ \\
+\bottomrule
+\end{tabular}
+\caption{}
+\end{table}
+
+
+\paragraph{Raha}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llr}
+\toprule
+ \# &                         Feature &         Influence \\
+\midrule
+ 1 &  characters\_alphabet\_variance &  -0.45 $\searrow$ \\
+ 2 &         cells\_length\_variance &  -0.45 $\searrow$ \\
+ 3 &   characters\_numeric\_variance &  -0.42 $\searrow$ \\
+\bottomrule
+\end{tabular}
+\caption{}
+\end{table}
+
+\paragraph{dBoost}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llr}
+\toprule
+ \# &                         Feature &            Influence \\
+\midrule
+ 1 &         cells\_length\_variance &     -0.64 $\searrow$ \\
+ 2 &  characters\_alphabet\_variance &      -0.3 $\searrow$ \\
+ 3 &   characters\_numeric\_variance &  -0.01 $\rightarrow$ \\
+\bottomrule
+\end{tabular}
+\caption{}
+\end{table}
