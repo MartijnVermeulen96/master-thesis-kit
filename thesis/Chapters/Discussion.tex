@@ -1,17 +1,21 @@
 \chapter{Discussion}
 \label{chap:discussion}
 
-\paragraph{Findings and implications}
+% \paragraph{Findings and implications}
+% Still hard to use, need to be a programmer
 
-
-\paragraph{Limitations}
-\begin{itemize}
-    \item There are no designated duplicates detection tool
-    \item How to im
-    \item Should the best estimator pipeline be chosen with the mean squared error, or another metric like mean absolute error?
-    \item Should 
-\end{itemize}
 % 
 
+In this section, some considerations and their possible limitations in this research that might influence the findings will be discussed. 
+
+% There are no designated duplicates detection tool
+First of all, in the empirical study and throughout the estimation process, there was no tool included for designated duplicate detection. Although datasets in the empirical study contained duplicates, there was no specific tool to detect them row-wise. The goal of this research was to compare error detection tools and their configuration holistically, but it might benefit from having more error type specific error detection tools.
+
 % Rerun stochastic error detection tools -> How to train or score estimators? 
-% Use the best regression model for each strategy separately.
+Secondly, ActiveClean and Raha are partially based on random sampling for labeling errors actively during cleaning. Different samples could lead to different results for the same configuration and dataset. Running strategies is a time-consuming process, so repeated experiments were not feasible for this stage of the research. Also, when there would have been repetitions in experiments, it would be unclear on which performance results or which possible aggregate of results (mean, max, min, etc..) to use for estimation. 
+
+% Should the best estimator pipeline be chosen with the mean squared error, or another metric like mean absolute error? & Use the best regression model for each strategy separately.
+Also, the settings of each estimator pipeline are chosen to be same for each performance metric (precision, recall and F1 separately). Another possibility would be picking the optimal setting of the estimator pipeline for each specific strategy. This could improve estimation, but also leads to more complexity and possible overfitting. Besides, now the minimization was done using the mean squared error, but other metrics could be fitting as well, like the mean absolute error. It could be that minimizing another function would lead to different results in the strategy ranking. 
+
+% Interpretability on precision and recall models
+Lastly, the interpretability for finding dataset characteristics that influence the error detection performance results was only done using direct F1 estimation. While this gives a complete image of the general performance of a tool, information is lost when compared to looking at both precision and recall. 

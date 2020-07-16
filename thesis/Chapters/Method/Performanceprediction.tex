@@ -130,7 +130,7 @@ To test the ability of an estimator pipeline to estimate the real scores of erro
 	MSE = \frac{1}{|D||S|} \sum_{d \in D} \sum_{s \in S} e(s, d)^2
 \end{equation}
 
-This mean square error will give a method of comparison between different estimator configurations. For the best estimator configuration, the estimation error distribution, variance and 95\% percentile will be shown to give an overall report on the estimation correctness.
+This mean square error will give a method of comparison between different estimator configurations. For the best estimator configuration, the estimation error distribution will be shown to find how the estimator generally performs, for example by comparing the number of over- and under-estimations.
 
 \subsection{Estimator selection}
 \label{subsec:estimatorselection}
@@ -144,9 +144,9 @@ The estimator pipeline consists of 4 possible parts:
 	\item Regression model
 \end{enumerate}
 
-Each part of the pipeline is configurable. The first three parts can be left out, leaving only a regression model with the normal dataset profile as input. Most regression models are linear, are heavily impacted by outliers and might perform worse with high dimensional input values. 
+Each part of the pipeline is configurable. The first three parts can be left out, leaving only a regression model with the normal dataset profile as input. 
 
-\subsubsection{Feature normalization}
+\subsubsection{Feature normalization or standardization}
 The three chosen possibilities for feature normalization are:
 \begin{itemize}
 	\item None: No normalization or scaling is applied.

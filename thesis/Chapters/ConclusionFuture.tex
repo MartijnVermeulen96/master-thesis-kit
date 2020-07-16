@@ -1,17 +1,24 @@
 \chapter{Conclusion \& Future Work}
 \label{chap:conclusion}
-
 \paragraph{Conclusions}
-~\\RQ: 
+In this thesis, a comparative study has been done for error detection tools on relational data. 
+% RQ1 What is the current state of the art and what is the performance of these tools?
+The current state of the art was represented by 6 error detection tools with different underlying techniques. An empirical study was done on 14 datasets with a range of characteristics. Out of the 6 tools, Raha, an interactive tool performed best overall. However, the performance results of human interactive tools was highly dependent on the accuracy of the human in the loop.
 
-\begin{itemize}
-    \item RQ1:
-    \item RQ2:
-    \item RQ3:
-    \item RQ4:
-\end{itemize}
+% RQ2 Is it possible to create an extensive data profile to estimate performance on unseen datasets?
+Then, a data profile without any previous knowledge about the dataset was created. Using this data profile, the performance results of the error detection tools and their configuration were estimated. With a median absolute error of 0.079 to estimate the F1-score of left out datasets, the estimation has proven to be worthwhile. 
+
+% RQ3 Is it possible to generate a ranking of tools according to their performance on unseen datasets?
+Using the meaningful estimators, an estimated suggested ranking of error detection strategies for an unseen dataset was created. The strategy ranking system was able to generate near perfect tool rankings for a dataset, when looking only at the tools suggested. Ranking the tools with only 1 configuration and scoring the ranking based on that configuration was a harder task, but was performing promising in general. Also, the strategy ranking 
+
+% RQ4 Do these data profiles provide more interpretability of error detection tools?
+Lastly, the error detection tool performance estimators were analyzed to provide interpretability on how and when an error detection strategy would perform well. Found was that the F1 measure was mostly impacted by how structured the data was, with most tools performing better when columns of the data have similar length and contained similar numbers of alphabetical characters. 
+
+These findings can all be combined to answer the main research question: \textit{How to choose a fitting error detection algorithm for a specific relational dataset?} 
+\\By using the knowledge from the empirical study, a user is able to see which tools are performing well in general. Then, for a detailed choice, the user can use a suggested strategy ranking for that specific relational dataset, in order to find the best tool and configuration in a substantiated manner.
 
 \paragraph{Future work}
+Besides the possible improvements and considerations discussed in chapter \ref{chap:discussion}, there are multiple next steps that could improve the research presented in this thesis:
 \begin{itemize}
     \item Estimating the runtime of error detection tools
     \item Creating an online repository for adding new datasets and error detection strategies

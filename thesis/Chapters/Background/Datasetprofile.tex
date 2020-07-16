@@ -4,7 +4,7 @@ In this section dataset profiling will be discussed. Features need to be enginee
 %% REDS
 % This is a direct descendant from the above schema matching ideas
 \paragraph{REDS (\cite{Mahdavi2019-pk})} estimates the performance of error detection strategies based on datasets using their so-called "dirtiness profiles". It takes a number of samples from the dataset, extracts content, structure and quality features from this sample. Then it trains a regression model to predict the performance for each strategy. For \textbf{N} strategies, there will be \textbf{N} different models to predict the performance.
-This is promising as their research did not require unrealistically large repositories. However, their estimation error was still increasing in their tests by adding more data profiles to the repository.
+This is promising as their research did not require unrealistically large repositories. However, their estimation error was still decreasing in their tests by adding more data profiles to the repository.
 So a large repository could be possible and would lead to better estimations of performance of strategies.
 The idea is also used in Raha \cite{Mahdavi2019-zf}, as a plugin, but the idea will be used in this research as a standalone recommendation for using error detection tools. The main idea is that similar datasets will have similar "dirtiness profiles". And similar datasets would require similar error detection methods. Key ideas from schema matching can be used to check for similarity between different datasets.
 

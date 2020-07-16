@@ -13,14 +13,11 @@ Based on section \ref{sec:performanceprediction} and \ref{sec:toolranking}, with
 
 \subsection{Feature selection}
 \label{subsec:featureselection}
-Besides the learnable feature selection that will be used in the performance estimate pipeline of section \ref{sec:performanceprediction}, feature selection can also be done at the end of the estimation loop. Upon finding the most important features from the following section, a reduction of the dimensionality of the input to the estimator can be done, in order to improve the machine learning models, due to the curse of dimensionality otherwise. 
+Besides the learnable feature selection that will be used in the performance estimate pipeline of section \ref{sec:performanceprediction}, feature selection can also be done at the end of the estimation loop. Upon finding the most important features from the following section, a reduction of the dimensionality of the input to the estimator can be done, in order to improve the machine learning models, due to the curse of dimensionality otherwise. For this part, permutation importance will be used to determine which features contribute to better estimation. With this reduced number of features, the performance prediction of section \ref{sec:performanceprediction} will be repeated, to see if there is an improvement in estimation.
 
 \subsection{Feature importance}
 % According to the regression models
 % Used as a proxy, something that is easy and quick to measure
-Finding which data profile features are important for the regression model to estimate its performance, give insights to how a certain error detection strategy behaves. 
+Finding which data profile features are important for the regression model to estimate its performance, give insights to how a certain error detection strategy behaves.
 
-% Per tool
-Permutation Importance
-
-SHAP
+To answer whether the dataset profile features could provide more insight on when and how the selected error detection tools perform correctly, the direct F1-score estimators from section \ref{sec:performanceprediction} will be analyzed using SHAP values. For each tool, the best performing configuration (highest mean F1-score) will be analyzed. First, the features with the highest impact on the estimator output will be inspected. Then, the correlation between the most impacting features and the SHAP contribution of that feature will be calculated to find if higher or lower feature values have positive or negative impact on the model outputs.

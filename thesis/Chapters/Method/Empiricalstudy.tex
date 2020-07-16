@@ -69,17 +69,20 @@ Cell-based metrics, are metrics that identify each cell in a dataset as a separa
 Row-based metrics, are metrics that identify each row in a dataset as a separate entity in the test set. A row could contain multiple errors, but only the whole row is counted as 1 positive or negative.
 
 \subsubsection{Scores}
-In the case of error detection, instances are either erroneous (positive) or clean (negative). Because the ground truth of the datasets in section \ref{subsec:datasets} is known, the following metrics can be calculated directly after the execution of a tool.
+In the case of error detection, instances are either erroneous (positive) or clean (negative). Because the ground truth of the datasets in section \ref{subsec:datasets} is known, the performance metrics can be calculated directly after the execution of a tool. Precision, recall and the F1-score will be calculated.
 
 \subsubsection{Examples}
 To provide visual aid for the different metrics proposed, examples are shown in figures \ref{fig:error_row_wise}. In the figure, the real errors (difference between dirty dataset and the ground truth) are labeled cell-wise by underling and displaying in bold. The "detected" errors by the fictional error detection strategies are shown with a red background. In contrast to the cell-wise detection, the erroneous rows are marked by the black arrows to the left. The "detected" faulty rows are marked by the red arrows on the right.
-\\\textbf{Cell-wise scores} in the examples are as follows. 
+
+~\\\textbf{Cell-wise scores} in the examples are as follows. 
 \\For figure \ref{subfig:errors_row}, there is a total of 5 real error cells. The detection algorithm marks all 5 errors correctly. So $precision = \frac{5}{5} = 1$, $recall = \frac{5}{5} = 1$ and $F1 = 2 \times \frac{1 \times 1}{1 + 1} = 1$. 
 \\For figure \ref{subfig:errors_row_worse}, there are also the same 5 real error cells. The detection algorithm marks only 1 error correctly and 3 more incorrectly. So $precision = \frac{1}{4} = 0.25$, $recall = \frac{1}{5} = 0.2$ and $F1 = 2 \times \frac{0.25 \times 0.2}{0.25 + 0.2} = 0.22$. 
-\\\textbf{Row-wise scores} for the two examples are different than the cell-wise performance scores.
+
+~\\\textbf{Row-wise scores} for the two examples are different than the cell-wise performance scores.
 \\For figure \ref{subfig:errors_row}, there is a total of 3 real error rows. The detection algorithm marks all 3 rows correctly. So $precision = \frac{3}{3} = 1$, $recall = \frac{3}{3} = 1$ and $F1 = 2 \times \frac{1 \times 1}{1 + 1} = 1$. 
 \\For figure \ref{subfig:errors_row_worse}, there are also the same 3 real error rows. The detection algorithm marks only 1 row correctly and 2 more incorrectly. So $precision = \frac{1}{3} = 0.33$, $recall = \frac{1}{3} = 0.2$ and $F1 = 2 \times \frac{0.33 \times 0.33}{0.33 + 0.33} = 0.33$. 
-\\For this research, cell-wise scores will be used. The goal of error detection in this thesis is to holistically find all different types of errors. Unlike for example duplicate rows, most other errors are defined only for single cells. To also include duplicate rows in the scoring, the complete row is marked as erroneous. The error detection algorithms will be scored accordingly.
+
+~\\For this research, \textbf{cell-wise scores} will be used. The goal of error detection in this thesis is to holistically find all different types of errors. Unlike for example duplicate rows, most other errors are defined only for single cells. To also include duplicate rows in the scoring, the complete row is marked as erroneous. The error detection algorithms will be scored accordingly.
 
 \begin{figure}
 \centering
@@ -123,47 +126,15 @@ The error types are derived from section \ref{subsec:errortypes}, with the addit
     \item \textit{Other error types:} examples of this type are values that are result of a classification (output) based on the other given columns, but the output is wrong. An error value where the content of the entity is changed, i.e. wrong categories, description or other matters that change the meaning of the underlying value.
 \end{itemize}
 
-% \begin{itemize}
-%     \item \textit{Outliers:} Values that are erroneous and do not fit in the (column) distribution of the dataset
-%     \item \textit{Pattern violations:} Values that are erroneous and do not fit in the common pattern of that column (i.e. 2k20 in stead of 2020)
-%     \item \textit{Spelling errors:} Error values where content and pattern is correct, but with wrong spelling.
-%     \item \textit{Inconsistent representations of entities:} Inconsistent abbreviations or references to entities (like states, companies, universities, etc..)
-%     \item \textit{Missing values:} Empty values or missing value placeholders (N/A) that are replaced are supposed to be a real value
-%     \item \textit{Wrong content:} An error value where the content of the entity is changed, i.e. wrong categories, description or other matters that change the meaning of the underlying value.
-%     \item \textit{Classification errors:} Values that are result of a classification (output) based on the other given columns, but the output is wrong
-% \end{itemize}
-
 \subsubsection{Selected datasets}
-A summary of the list of datasets used for the empirical study, performance estimation and ranking of error detection strategies can be found below (table \ref{tab:datasets}). The datasets were taken from published data from the following papers: 
+A summary of the list of datasets used for the empirical study, performance estimation and ranking of error detection strategies can be found below (table \ref{tab:dataset-error-types}). The datasets were taken from published data from the following papers: 
 \begin{itemize}
     \item ED2 by \cite{Neutatz2019-aw}
     \item Raha by \cite{Mahdavi2019-zf}
     \item REDS by \cite{Mahdavi2019-pk}
     \item CleanML by \cite{Li2019-ve}
 \end{itemize}
-
-% \begin{table}[H]
-% \begin{adjustbox}{tabular=lllll,center}
-% Name        & Error types                                              \\ \hline
-% Beers       & Pattern violations \& Rule violations                    \\
-% Flights     & Pattern violations \& Rule violations                    \\
-% Hospital    & Pattern violations                                       \\
-% Rayyan      & Pattern violations \& Rule violations                    \\
-% Tax         & Pattern violations                                       \\
-% Toy         & Rule violations \& Other error types                     \\
-% Restaurants & Pattern violations \& Rule violations                    \\
-% Restaurant  & Pattern violations                                       \\
-% Movies      & Pattern violations, Rule violations \& Other error types \\
-% Movie       & Rule violations                                          \\
-% University  & Rule violations                                          \\
-% Uscensus    & Rule violations \& Other error types                     \\
-% KDD         & Outliers \& Other error types                            \\
-% EEG         & Outliers \& Other error types                            \\
-% Company     & Pattern violations                                      
-% \end{adjustbox}
-% \caption{Table with different datasets used and the common error types present in these datasets}
-% \label{tab:datasets}
-% \end{table}
+The statistics for the used datasets can be found in table \ref{tab:dataset_statistics}.
 
 \begin{table}[]
 \begin{adjustbox}{width=\textwidth,center}
@@ -191,40 +162,31 @@ A summary of the list of datasets used for the empirical study, performance esti
 \end{table}
 
 \paragraph{AirBnb}
-This dataset contains 42,492 records on hotels in the top
-10 tourist destinations and major US metropolitan areas scraped from Airbnb.com. Each record has 40 attributes including the number of bedrooms, price, location, etc. Demographic and economic attributes were scraped from city-data.com. The classification task is to determine whether the rating of each hotel is 5 or not.
-This dataset contains missing values, numerical outliers and duplicates.
+This dataset contains 42,492 records on hotels in the top 10 tourist destinations and major US metropolitan areas scraped from Airbnb.com. Each record has 40 attributes including the number of bedrooms, price, location, etc. Demographic and economic attributes were scraped from city-data.com. The classification task is to determine whether the rating of each hotel is 5 or not.
 \\(Source: CleanML)
 
 \paragraph{Beers} 
-List of different beers
-Numeric ID's, foreign keys, Names in alphanumeric, City, state abbreviation, includes amount of ounces (float/int) \& percentage alcohol (float)
+This dataset contains a list of different beers. The attributes are numeric ID's, foreign keys, names, City, state abbreviation, includes amount of ounces \& percentage alcohol.
 \\(Source: ED2, REDS, Raha)
 
 \paragraph{EEG}
-This is a dataset of 14,980 EEG recordings. Each record
-has 14 EEG attributes. The classification task is to predict whether
-the eye-state is closed or open. This dataset contains numerical outliers. We inject mislabels into this dataset by randomly flip labels
+This is a dataset of 14,980 EEG recordings. Each record has 14 EEG attributes. One of the attributes is a classification task is to predict whether the eye-state is closed or open. In the dirty version of this dataset, some of these predictions are wrong.
 \\(Source: CleanML)
 
 \paragraph{Flights}
-List of flight schedules
-Contains id, source of data (abbrev/site?), flight number alphanumeric with dashes, scheduled and actual departure and arrival times in XX:XX a.m. format
+This dataset contains a flight schedule. Attributes are id, source of data, flight number alphanumeric with dashes, scheduled and actual departure and arrival times in XX:XX a.m. format.
 \\(Source: ED2, REDS, Raha)
 
 \paragraph{Hospital}
-List of hospital experiments (Introduced errors)
-index, ProviderNumber, HospitalName, Address1, Address2, Address3, City, State, ZipCode, CountyName, PhoneNumber, HospitalType, HospitalOwner, EmergencyService, Condition, MeasureCode, MeasureName, Score, Sample, Stateavg
+This source contains a list of hospital experiments. Attributes include ID, hospital names, addresses, measurement types, measurement named, experiment scores and other statistics about the hospital and experiments.
 \\(Source: REDS, Raha)
 
 \paragraph{Marketing}
-This dataset [6] consists of 8,993 records about
-household income from a survey. Each record has 14 demo-
-graphic attributes including sex, education, etc. The classification task is to predict if the annual household income is less than \$25,000. This dataset contains missing values.
+This dataset consists of 8,993 records about household income from a survey. Each record has 14 demographic attributes including sex, education, etc. Another attribute is a classification task is to predict if the annual household income is less than \$25,000.
 \\(Source: CleanML)
 
 \paragraph{Movies}
-List of popular movies
+This test set is a collection of popular movies. Attributes of this source are:
 Id, Name, Year, Release Date, Director, Creator, Actors, Cast, Language, Country, Duration, RatingValue, RatingCount, ReviewCount, Genre, Filming Locations, Description
 \\(Source: ED2, REDS, Raha)
 
@@ -233,18 +195,15 @@ Same as movies, but less and different columns
 \\(Source: CleanML)
 
 \paragraph{Rayyan}
-List published articles
-id, article\_title, article\_language, journal\_title, jounral\_abbreviation, journal\_issn, article\_jvolumn, article\_jissue, article\_jcreated\_at, article\_pagination, author\_list
+This dataset contains a set of published articles. The attributes include the title, which journal it was published in, the date, pagination and other information important for citing the articles.
 \\(Source: REDS, Raha)
 
 \paragraph{Restaurants}
-List of restaurants
-id, name, streetAddress, city, state, zipCode, phone, website, priceRange, categories, ratingValue, neighborhood, payment-method, years-in-business, extra-phones, aka
+This source is a list of restaurants. Attributes contain the name, address, phone number, website and other attributes that our commonly found on restaurant review websites (like rating value and price range).
 \\(Source: ED2)
 
 \paragraph{Restaurant}
-Same idea as "Restaurants", but less columns
-name, streetAddress, city, state, zipCode, telephone, website, priceRange, categories, ratingValue, neighborhood
+Same idea as "Restaurants", but less columns.
 \\(Source: CleanML)
 
 \paragraph{Toy}
@@ -252,13 +211,11 @@ Dummy set for testing purposes \& testing for generalizability
 \\(Source: REDS, Raha)
 
 \paragraph{University}
-This dataset contains 286 records about universities. Each record has 17 attributes including state, university name,
-SAT scores, etc. The classification task is to predict whether the expenses are greater than 7,000 for each university. This dataset contains inconsistent representations for states and locations.
+This dataset contains 286 records about universities. Each record has 17 attributes including state, university name, SAT scores, etc. It contains a column with a classification task is to predict whether the expenses are greater than 7,000 for each university. This dataset contains inconsistent representations for states and locations.
 \\(Source: CleanML)
 
 \paragraph{Uscensus}
-This dataset contains 32,561 US Census records
-for adults. Each record has 14 attributes including age, education, sex, etc. The classification goal is to predict whether the adult earns more than \$50,000. This dataset contains missing values.
+This dataset contains 32,561 US Census records for adults. Each record has 14 attributes including age, education, sex, etc. It also contains an attribute with a classification goal of predicting whether the adult earns more than \$50,000. 
 \\(Source: CleanML)
 
 
@@ -292,7 +249,7 @@ for adults. Each record has 14 attributes including age, education, sex, etc. Th
 In this subsection, the tools used in the case study will be discussed. The extensive summary of the workings of the tools can be found in section \ref{chap:background}. The summarized underlying techniques are explained by the common error types that are detectable by the tools as seen in table \ref{tab:tools-error-types}.
 
 \subsubsection{Raha \cite{Mahdavi2019-zf}}
-A human-guided but configuration-free error detection system. It selects different preconfigured strategies automatically, based on previously cleaned datasets. Then, it incorporates the \textbf{outputs from various error detection strategies} as a feature vector for the error detection task. Using these feature vectors, it creates clusters of which samples will be labeled in order to reduce user involvement.
+A human-guided error detection system. It selects different preconfigured strategies automatically, based on previously cleaned datasets. Then, it incorporates the \textbf{outputs from various error detection strategies} as a feature vector for the error detection task. Using these feature vectors, it creates clusters of which samples will be labeled in order to reduce user involvement.
 
 \subsubsection{Forbidden Itemsets \cite{Rammelaere2019-ea}}
 Applies \textbf{constraint-like method} to detect and repair invalid entries in a dataset. The proposed so-called forbidden itemsets capture unlikely value co-occurrences, similar to denial constraints.
@@ -304,11 +261,7 @@ A disguised missing values detector. Whereas most missing value detector focus o
 % HoloClean, a data cleaning system that relies on \textbf{statistical learning and inference} to unify a range of data repairing methods. Contributions in this tool include: 1. a compiler that generates a probabilistic model which unifies different signals for repairing a dataset 2. an algorithm that uses Bayesian analysis to prune the domain of the random variables corresponding to noisy cells in the input dataset to systematically tradeoff the scalability and quality of repairs 3. an approximation scheme that relaxes hard integrity constraints to priors over independent random variables.
 
 \subsubsection{ActiveClean \cite{Krishnan2016-rg}}
-
-TfidfVectorizer
-
-sklearn.feature\_extraction.text.TfidfVectorizer
-
+This tool uses a \textbf{human in the loop to actively learn} which rows are errors. The implementation created uses tf-idf features (frequency–inverse document frequency), created using the scikit-learn \verb|TfidfVectorizer|. The implementation treats each row as a document.
 
 \subsubsection{dBoost \cite{Pit--Claudel2016-dj}}
 Outlier Detection in Heterogeneous Datasets using Automatic Tuple Expansion. It uses \textbf{expansion of data tuples using knowledge about the schema and field types}. For example, a timestamp 1424866716 could be expanded into year 2015, Wednesday, etc.. Then outliers are detected based upon these schemas.
@@ -337,5 +290,5 @@ A \textbf{knowledge base} and crowd powered data cleaning system that, given a t
 \end{table}
 
 \subsection{Execution \& Analysis}
-To answer research question 1; \textit{What is the current state of the art and what is the performance of these tools?}; The different parts from the sections above will be combined. The tools in section \ref{subsec:tools} will be run in selected configurations (tool specific) on all the datasets from section \ref{subsec:datasets}. The main metrics that will be kept are cell-wise precsion, recall and F1-score. In a single experiment, a timeout limit is set to filter out tool configuration that do not satisfy runtime needs. The results will be aggregated into showing the best results for a single tool (regardless of its configuration) and the target dataset. This will be shown in a table where the rows represent a single dataset, and each column represents a tool. Such a table will allow quick comparison to see which of the tools performs best for which dataset.
+To answer research question 1; \textit{What is the current state of the art and what is the performance of these tools?}; The different parts from the sections above will be combined. The tools in section \ref{subsec:tools} will be run in selected configurations (tool specific) on all the datasets from section \ref{subsec:datasets}. The main metrics that will be kept are cell-wise precision, recall and F1-score. In a single experiment, a timeout limit is set to filter out tool configuration that do not satisfy runtime needs. The results will be aggregated into showing the best results for a single tool (regardless of its configuration) and the target dataset. This will be shown in a table where the rows represent a single dataset, and each column represents a tool. Such a table will allow quick comparison to see which of the tools performs best for which dataset.
 \\Additionaly, these tables can be repeatedly be created with filters (such as no human interaction) or grouping the best scores per tool and dataset based on the selected metrics (i.e. best precision or best F1-score).
