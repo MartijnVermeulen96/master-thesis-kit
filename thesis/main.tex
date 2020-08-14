@@ -57,13 +57,37 @@ headsepline, % Uncomment to get a line under the header
 \addbibresource{references.bib} % The filename of the bibliography
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 \usepackage{caption, subcaption}
 \usepackage{pgfplots}
 \usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage{mathtools}
-\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\usepackage{cleveref}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+% Redefine for reference capitalization
+
+\addto\extrasenglish{
+%   \def\equationautorefname{Equation}%
+%   \def\footnoteautorefname{footnote}%
+%   \def\itemautorefname{item}%
+%   \def\figureautorefname{Figure}%
+%   \def\tableautorefname{Table}%
+%   \def\partautorefname{Part}%
+  \def\appendixautorefname{Appendix}%
+  \def\chapterautorefname{Chapter}%
+  \def\sectionautorefname{Section}%
+  \def\subsectionautorefname{Subsection}%
+  \def\subsubsectionautorefname{Subsubsection}%
+%   \def\paragraphautorefname{paragraph}%
+%   \def\subparagraphautorefname{subparagraph}%
+%   \def\FancyVerbLineautorefname{line}%
+%   \def\theoremautorefname{Theorem}%
+%   \def\pageautorefname{page}%
+}
+
 
 \let\hide\iffalse
 \let\unhide\fi
@@ -296,9 +320,10 @@ $\omega$ & angular frequency & \si{\radian} \\
 
 \include{Chapters/Introduction}
 \include{Chapters/Background}
+\include{Chapters/ErrorDetectionTools}
 \include{Chapters/Methodology}
+\include{Chapters/ExperimentalSetup}
 \include{Chapters/Results}
-\include{Chapters/Discussion}
 \include{Chapters/ConclusionFuture}
 
 %----------------------------------------------------------------------------------------
@@ -310,6 +335,7 @@ $\omega$ & angular frequency & \si{\radian} \\
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
+\include{Appendices/AppendixFeature}
 % \include{Appendices/AppendixA}
 %\include{Appendices/AppendixB}
 %\include{Appendices/AppendixC}

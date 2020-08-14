@@ -1,12 +1,32 @@
 % RQ2
+\newpage
 \section{Performance prediction}
 \label{sec:performanceprediction}
-The next step was to use the results given by the empirical study (\ref{sec:empiricalstudy}) for predicting performance on unseen new datasets. This idea was proposed by \cite{Mahdavi2019-pk}. This paper proposes the idea of a 'dirtiness profile'. The idea is that error detection tools would have similar performance on similar datasets. Regression models would be trained and tested on characteristics of the dataset, also called 'dirtiness profile' (input) and F1-scores (output). The following section will be a modification of the research by \cite{Mahdavi2019-pk}. 
-The goal will be to estimate performance and predict values as close to the real performance results as possible, which can be measured with the mean squared error.
-The train and test in and outputs are retrieved from the empirical study (section \ref{sec:empiricalstudy}). One main difference is that this research will solely focus on automated prediction, where no rules or patterns from the ground truth are taken and no user defined configurations need to be created in order to perform the predictions. Besides, multiple new input features will be introduced to see if the performance can be increased. Lastly, instead of directly estimating the F1-score, as done by \cite{Mahdavi2019-pk}, estimators will be trained on both the recall and precision scores. The F1-score can the be calculated using both estimated scores.
-A regression model is trained for every strategy (error tool and specific configuration, see figure \ref{fig:eachstrategy}). 
+The next step is to answer the second research question: \textit{Is it possible to create an extensive data profile to estimate performance on unseen datasets?}; 
 
-\begin{figure}
+This can be answered by using the results given by the empirical study (\autoref{sec:empiricalstudy}) for predicting performance on unseen new datasets. The goal of performance prediction, is to estimate the performance scores of an error detection strategy, on a specific dataset, without having to run the strategy beforehand or having the clean dataset at hand. The data/work flow of this process is shown in \autoref{fig:method_estimation}.
+When estimators are capable of estimating the performance scores, one could use this estimation to choose an error detection strategy. This contributes to the main research question of choosing a fitting error detection algorithm for a specific relational dataset.
+
+To make predictions on the performance scores, information about the dataset is extracted beforehand, called a dataset profile. This profile contains high-level information that is of low cost computationally. This high-level information will most presumably give an idea on how to fix the errors inside the dataset, which could be input to predict the performance score a specific error detection strategy will get on that particular dataset. An estimator then is trained for each error detection strategy, with the all the data profiles. The main notion is that error detection strategies assumably have comparable performance scores on similar datasets in terms of these high-level information profiles. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{thesis/Figures/Method/PerformanceEstimation-Profiler.pdf}
+	\caption{Performance scores estimation}
+	\label{fig:method_estimation}
+\end{figure}
+
+\newpage
+\paragraph{Analogy} One can think of this like going into a car garage with a broken car. The employee of the garage will take a quick look at the outside of the car, at the brand of the car and will ask you some questions about the problems you have. This small \textit{\textbf{assessment}} could give an idea on what fixing strategy will most probably work best to fix the car. In his mind, the employee will have a list of strategies to fix a car (replace tyres, oil change, etc..) and will \textbf{\textit{estimate the possible outcomes}} (or performance) of those strategies (speed of fixing, longetivity, cost, etc..), based on the performance of these strategies on previous cars with a similar assessment. Although in the execution, the results might differ from what the employee had in mind. The estimation might not give the exact performance outcome.
+
+This is the same with the prediction of the performance scores of error detection strategies as depicted in \autoref{fig:method_estimation}. An estimator, in this case a regression model, will look at a dataset and do the small assessment (\textbf{\textit{dataset profile}}), like looking at the car. From this small assessment, the estimator will try to \textbf{\textit{estimate the performance scores}} for each of the error detection strategies in mind based on previous datasets and the performance on those datasets, like the car garage employee guessed the outcome of replacing the tyres based on experience with previous cars. However, will be a difference between the real outcome of that strategy (experimental results from \autoref{sec:empiricalstudy}) and the estimations of the performance scores. 
+
+This idea was proposed by \cite{Mahdavi2019-pk}. This paper proposes the idea of a 'dirtiness profile'. The idea is that error detection tools would have similar performance on similar datasets. Regression models would be trained and tested on characteristics of the dataset, also called 'dirtiness profile' (input) and F1-scores (output). The following section will be a modification of the research by \cite{Mahdavi2019-pk}. 
+The goal will be to estimate performance and predict values as close to the real performance scores as possible, which can be measured with the mean squared error.
+The train and test in and outputs are retrieved from the empirical study (\autoref{sec:empiricalstudy}). One main difference is that this research will solely focus on automated prediction, where no rules or patterns from the ground truth are taken and no user defined configurations need to be created in order to perform the predictions. Besides, multiple new input features will be introduced to see if the performance can be increased. Lastly, instead of directly estimating the F1-score, as done by \cite{Mahdavi2019-pk}, estimators will be trained on both the recall and precision scores. The F1-score can the be calculated using both estimated scores.
+A regression model is trained for every strategy (error tool and specific configuration, see \autoref{fig:eachstrategy}). 
+
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{thesis/Figures/Method/PerformanceEstimation-OnlyEstimate.pdf}
 	\caption{Each strategy will result in a separate estimator}
@@ -15,7 +35,8 @@ A regression model is trained for every strategy (error tool and specific config
 
 \subsection{Data profiles}
 \label{subsec:dataprofiles}
-The data profiles are created using only top-level features, without having any previous knowledge about the datasets. In this research, the focus lies only on features that are extractable without knowing the ground truth, only the dirty dataset. The basic set of features used is a subset of the proposed features from \cite{Mahdavi2019-pk}. However, all features where some information about the ground truth was necessary (rules, patterns or other heuristics found in the clean dataset), were left out. The extracted features extracted from each column. Then, aggregates of these column-wise extracted features are aggregated using the mean, variance, min and max to get a representation of feature distributions for each column in a dataset, with homogeneous output in size for training the regression models later on. These aggregated features representing the dataset profiles are the input values for the estimators, or the $x$ values. 
+To answer the first part of the second research question: \textit{Is  it  possible  to  \textbf{create an extensive data profile} to estimate performance on unseen datasets?}, this section will discuss the methodology of creating such a data profile for a dataset.
+The data profiles are created using only top-level features, without having any previous knowledge about the datasets. In this research, the focus lies only on features that are extractable without knowing the ground truth, only the dirty dataset. The basic set of features used is a subset of the proposed features from \cite{Mahdavi2019-pk}. However, all features where some information about the ground truth was necessary (rules, patterns or other heuristics found in the clean dataset), were left out. The extracted features extracted from each column. Then, aggregates of these column-wise extracted features are aggregated using the mean, variance, min and max to get a representation of feature distributions for each column in a dataset, with homogeneous output in size for training the regression models later on. These aggregated features representing the dataset profiles are the input values for the estimators. 
 
 \begin{table}[H]
 \centering
@@ -51,48 +72,53 @@ The data profiles are created using only top-level features, without having any 
 % Real performance dataframe
 % Estimation performance dataframe
 % Calculate errors
-To discover whether the discussed data profiles are useful in estimating the performance of error detection tools, the setup from section \ref{sec:empiricalstudy} is updated. Figure \ref{fig:method_estimation} shows the flow of estimating the performance scores of the run error detection tools on the datasets. The goal of this workflow is to estimate the performance scores of error detection strategies on unseen datasets.
+To answer the other part of the second research question: \textit{Is it  \textbf{possible} to create an extensive data profile \textbf{to estimate performance} on unseen datasets?}, this section will describe the proposed experiment to test the estimation capabilities of possible estimators. 
+To discover whether the discussed data profiles are useful in estimating the performance of error detection tools, the setup from \autoref{sec:empiricalstudy} is updated. \autoref{fig:method_estimation} shows the flow of estimating the performance scores of the run error detection tools on the datasets. The goal of this workflow is to estimate the performance scores of error detection strategies on unseen datasets.
 
+The estimators will be created as scikit-learn (\cite{Pedregosa2011-su}) pipelines. Not only does this allow interchangeable regression models, but also configurable data preparation. The different configurable parts all have certain assumptions. A combinination of all possible settings will be created and tested, in order to find the best configuration possible.
 
-\begin{figure}%[h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{thesis/Figures/Method/PerformanceEstimation-Profiler.pdf}
-	\caption{Performance scores estimation}
-	\label{fig:method_estimation}
-\end{figure}
+To evaluate the estimators and find the best configuration for the estimators, an experiment has to be conducted to evaluate the prediction potential of these estimators.
+In reality, the estimators will be trained on all available training datasets and will be used to estimate performance scores on unseen datasets. However, with unseen datasets, only the dirty dataset is available, not the clean dataset. This means that it is not possible evaluate the prediction capabilities of these estimators in a straight-forward way.
+\textbf{Leave-one-out cross validation} is a method to simulate the behaviour of training on as many training datasets as possible, while still being able to evaluate the results afterwards, by leaving only one dataset out of that training set at the time. \autoref{tab:leave-one-out} shows such an example for leave-one-out training with 4 datasets available. In each iteration, a single dataset is left out of the training set, simulating the performance prediction for the left out dataset. This will result in a performance score prediction $\hat{y}(s_i, d_j)$ for a certain strategy $s_i$ and dataset $d_j$. 
 
-The estimators will be created as scikit-learn (\cite{Pedregosa2011-su}) pipelines. Not only does this allow interchangeable regression models, but also configurable data preparation. The different configurable parts all have certain assumptions. Because the underlying ideas behind the data profiles are not known, a power set (combinination of all possible settings), minus the unfeasible configurations will be created and ran as estimator. 
-To evaluate the estimators, each estimator pipeline will be tested using leave-one-out cross validation. Each estimated result of the performance metric will be captured and kept for later comparison. The error of the estimated result will then be calculated. For each dataset $d$ from $D$ datasets and error detection strategy $s$ from all strategies $S$. An error is the difference between estimation of the score and the score itself. The real score is denoted as $y$, which can be anything that is a result of the empirical study, so mainly precision, recall and f1-score. The estimated score is denoted as $\hat{y}$. The error for a single score, for a specific error detection strategy and dataset is the following:
-
-\begin{equation}
-	e(s, d) = \hat{y}(s, d) - y(s, d)
-\end{equation}
-
-Estimators will be trained for every strategy. The leave-one-out cross validation will be done for each strategy, as show in table \ref{tab:leave-one-out}. 
-
-\begin{table}%[H]
+ \begin{table}[H]
 \centering
 \begin{tabular}{|l|l|l|l|l|l|}
 \cline{1-4} \cline{6-6}
 \textbf{$d_1$} & \textbf{$d_2$} & \textbf{$d_3$} & \textbf{$d_4$} &                 & \textbf{Output} \\ \cline{1-4} \cline{6-6} 
-\textit{Test}          & Train         & Train         & Train         & $\rightarrow$ & $y(s_i, d_1)$      \\ \cline{1-4} \cline{6-6} 
-Train         & \textit{Test}          & Train         & Train         & $\rightarrow$ & $y(s_i, d_2)$      \\ \cline{1-4} \cline{6-6} 
-Test          & Train         & \textit{Test}          & Train         & $\rightarrow$ & $y(s_i, d_3)$     \\ \cline{1-4} \cline{6-6} 
-Test          & Train         & Train         & \textit{Test}          & $\rightarrow$ & $y(s_i, d_4)$      \\ \cline{1-4} \cline{6-6} 
+\textit{Estimate}          & Train         & Train         & Train         & $\rightarrow$ & $y(s_i, d_1)$      \\ \cline{1-4} \cline{6-6} 
+Train         & \textit{Estimate}          & Train         & Train         & $\rightarrow$ & $y(s_i, d_2)$      \\ \cline{1-4} \cline{6-6} 
+Test          & Train         & \textit{Estimate}          & Train         & $\rightarrow$ & $y(s_i, d_3)$     \\ \cline{1-4} \cline{6-6} 
+Test          & Train         & Train         & \textit{Estimate}          & $\rightarrow$ & $y(s_i, d_4)$      \\ \cline{1-4} \cline{6-6} 
 \end{tabular}
 \caption{Leave one out training example for a strategy $s_i$ and datasets $d_{1-4}$}
 \label{tab:leave-one-out}
 \end{table}
 
-This will leave a $m \times n$ matrix of scores, representing a $m$ estimators and the $n$ available datasets, as shown for the real scores in table \ref{tab:realscores} and the estimated scores in \ref{tab:estimatedscores}. Subtracting the two table from each other will give the errors of estimation, also a $m \times n$ table of errors of estimation.
+For each dataset $d$ from $D$ datasets and error detection strategy $s$ from all strategies $S$, the leave-one-out evaluation as described above and in \autoref{tab:leave-one-out} will be executed. This will leave a $m \times n$ matrix of estimated performance scores as shown in \autoref{tab:estimatedscores}, representing a $m$ strategies and the $n$ available datasets.
+For comparison, the real scores that are obtained from the empirical study from \autoref{sec:empiricalstudy} are shown in the same format in \autoref{tab:realscores}.
 
-\begin{table}%[h]
+ \begin{table}[h]
 	\centering
 	\addtolength{\leftskip} {-2cm}
 	\addtolength{\rightskip}{-2cm}
 	\captionsetup[subtable]{position = below}
 	\captionsetup[table]{position=top}
 	\caption{$m \times n$ (strategies $\times$ datasets) matrix of scores}
+		\begin{subtable}{0.5\linewidth}
+		\centering
+		\begin{tabular}{|l|l|l|l|l|}
+			\hline
+			               & \textbf{$d_1$}      & \textbf{$d_2$}      & \textbf{...} & \textbf{$d_n$}      \\ \hline
+			\textbf{$s_1$} & $\hat{y}(s_1, d_1)$ & $\hat{y}(s_1, d_2)$ & ...          & $\hat{y}(s_1, d_n)$ \\ \hline
+			\textbf{$s_2$} & $\hat{y}(s_2, d_1)$ & $\hat{y}(s_2, d_2)$ & ...          & $\hat{y}(s_2, d_n)$ \\ \hline
+			\textbf{...}   & ...                 & ...                 & ...          & ...                 \\ \hline
+			\textbf{$s_m$} & $\hat{y}(s_m, d_1)$ & $\hat{y}(s_m, d_2)$ & ...          & $\hat{y}(s_m, d_n)$ \\ \hline
+		\end{tabular}
+		\caption{Estimated performance scores}
+		\label{tab:estimatedscores}
+	\end{subtable}
+	\hspace*{4em}
 	\begin{subtable}{0.5\linewidth}
 		\centering
 		\begin{tabular}{|l|l|l|l|l|}
@@ -103,28 +129,20 @@ This will leave a $m \times n$ matrix of scores, representing a $m$ estimators a
 			\textbf{...}   & ...            & ...            & ...          & ...            \\ \hline
 			\textbf{$s_m$} & $y(s_m, d_1)$  & $y(s_m, d_2)$  & ...          & $y(s_m, d_n)$  \\ \hline
 		\end{tabular}
-		\caption{Real scores}
+		\caption{Real performance scores}
 		\label{tab:realscores}
 	\end{subtable}%
-	\hspace*{4em}
-	\begin{subtable}{0.5\linewidth}
-		\centering
-		\begin{tabular}{|l|l|l|l|l|}
-			\hline
-			               & \textbf{$d_1$}      & \textbf{$d_2$}      & \textbf{...} & \textbf{$d_n$}      \\ \hline
-			\textbf{$s_1$} & $\hat{y}(s_1, d_1)$ & $\hat{y}(s_1, d_2)$ & ...          & $\hat{y}(s_1, d_n)$ \\ \hline
-			\textbf{$s_2$} & $\hat{y}(s_2, d_1)$ & $\hat{y}(s_2, d_2)$ & ...          & $\hat{y}(s_2, d_n)$ \\ \hline
-			\textbf{...}   & ...                 & ...                 & ...          & ...                 \\ \hline
-			\textbf{$s_m$} & $\hat{y}(s_m, d_1)$ & $\hat{y}(s_m, d_2)$ & ...          & $\hat{y}(s_m, d_n)$ \\ \hline
-		\end{tabular}
-		\caption{Estimated scores}
-		\label{tab:estimatedscores}
-	\end{subtable}
 \end{table}
        
 
+To assess the estimated performance scores as shown in \autoref{tab:estimatedscores}, the scores will be compared element-wise with the real performance scores shown in \autoref{tab:realscores}. To do so, the difference between the estimation of the score and the score itself will be calculated. This is the \textbf{estimation error}. 
+The real score is denoted as $y$, which is a performance score result of the empirical study, for example precision, recall or f1-score. The estimated score is denoted as $\hat{y}$. The error for a single score, for a specific error detection strategy and dataset is the following:
 
-To test the ability of an estimator pipeline to estimate the real scores of error detection strategies, the mean square error for all the (strategy, dataset) tuples is taken. 
+\begin{equation}
+	e(s, d) = \hat{y}(s, d) - y(s, d)
+\end{equation}
+
+To quantify the ability of an estimator pipeline to estimate the real performance scores of error detection strategies, the mean square error for all the (strategy, dataset) tuples is taken. 
 
 \begin{equation}
 	MSE = \frac{1}{|D||S|} \sum_{d \in D} \sum_{s \in S} e(s, d)^2
@@ -164,7 +182,7 @@ For feature selection, different trainable configurations are possible to optimi
 	\item Select K Best (\verb|sklearn.feature_selection.SelectKBest|): This method selects the K best features according to a specified score. In this case, the \\\verb|sklearn.feature_selection.f_regression| method is used, where the correlation between the target values and each separate (univariate) feature is calculated.
 \end{itemize}
 
-Besides feature selection that will be learned from the input features, are trainable and present in the machine learning pipeline, feature selection can be done in retrospect, which will be discussed in section \ref{subsec:featureselection}.
+Besides feature selection that will be learned from the input features, are trainable and present in the machine learning pipeline, feature selection can be done in retrospect, which will be discussed in \autoref{subsec:featureselection}.
 
 \subsubsection{Principle component analysis}
 Principle component analysis is a dimensionality reduction method invented over a century ago (\cite{Pearson1901-de}), but still has a strong use case in machine learning today. As said in the previous section, too many input features will lead to worse performance with the small amount of input samples to train. A linear PCA will reduce the whole feature space to N number of components holding the most variance for all the input points. To transform and capture non-linear relations, also Kernel PCA will be used. This will be useful, as most regressorion models will not be capable of distinguishing between non-linear relations.
@@ -194,3 +212,26 @@ As the final step in the pipeline, a regression model is present. It takes in th
 % Separate precision & recall estimator
 % Combined values
 Now that all the components for the estimator have been described, one can try to create ensemble estimators. In the study of \cite{Mahdavi2019-pk}, the F1-score was directly estimated. Knowing that this metric is directly build from both the precision and recall, it intuitively makes sense to first create estimators for the precision and recall (separate 2 estimator configurations), and use the output of these two configuration in combination to estimate the F1-score. Therefore, besides only calculating the MSE for a F1-score estimator, it will be compared to the MSE of the ensemble F1-score estimator.
+
+\subsection{Evaluation}
+\label{subsec:evaluation_performanceprediction}
+To evaluate the experiment results as discussed above, the results will be both qualitatively and quantitatively analyzed to find an answer the research question: \textit{Is it possible to create an extensive data profile to estimate performance on unseen datasets?};
+
+\paragraph{Qualitative} First, the best estimator configuration will be chosen according the lowest mean squared error of the estimations of real performance scores. This chosen estimator configuration will be qualitatively be judged on the distribution of estimation errors. In order to deem the estimation of performance successful, the error distribution should be heavily centered around 0, indicating that most estimations are close to perfect. Also, the distribution should not be uniform (which will indicate random errors) and should not have clusters of outliers, which indicate underestimations or overestimations. 
+
+\paragraph{Quantitative} Secondly, to add more substance to the evaluation, a baseline estimator method will be executed to see if the selected estimator has an improvement over that baseline method. The baseline estimator will be simply taking the average of the performance scores achieved on the training datasets. Only taking the average of the input performance scores, is similar to regression without any weights to the input variables.
+An example is shown in \autoref{tab:method_baseline_estimation} where the baseline estimators "trains" on $d_1$ and $d_2$. The estimation of a new dataset $d_3$ will be the average of the already known dataset performance scores, namely the average of 1 and $0.2$, which is $0.6$.
+\\If the estimators improve over this baseline method in terms of mean squared error, median absolute error and mean absolute error, it shows that the estimator is capable of learning information from the dataset profiles and giving a useful estimation, better than the baseline.
+
+\begin{table}[]
+\centering
+\begin{tabular}{l|lll}
+           & $d_1$ (Train) & $d_2$ (Train) & $d_3$ (Test) \\ \hline
+F1         & 1             & 0.2             & ?            \\
+Estimation & -             & -             & \textbf{0.6}
+\end{tabular}
+\caption{Example baseline performance estimation for some example strategy $s$}
+\label{tab:method_baseline_estimation}
+\end{table}
+
+~\\If both qualitatively and quantitatively the assessments are positive, it can be deemed possible to create an extensive data profile to estimate performance on unseen datasets.

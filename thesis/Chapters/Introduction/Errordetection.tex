@@ -6,7 +6,7 @@
 In 2020, everybody knows the word \textit{data}. Everybody wants to use data to improve their business, their academic work or even their daily lives. However, what does it actually mean to \textit{use data}? To give a clear idea of what \textit{using data} could look like, we take a look at an example scenario of a fictional character named "Robert". 
 
 ~\\Robert is working at a local bakery, selling different french baked goods. His bakery sells croissants, baguettes and macarons. Robert heard from a friend that he should use \textit{data} in order to improve his business. He came up with the idea to keep an Excel sheet with all the products that were sold. Then, after a full day of hard work, he wanted to show the owner of the bakery which product contributes the most to the revenue, so that they might focus more on that product. 
-At the end of the day, the sheet with looked like this, shown in figure \ref{fig:dirty_data_robert}. Each line (row) of data contains which order number the product belonged to, the product name and price, time sold and the seller of the product.
+At the end of the day, the sheet with looked like this, shown in \autoref{fig:dirty_data_robert}. Each line (row) of data contains which order number the product belonged to, the product name and price, time sold and the seller of the product.
 
 \begin{figure}
     \centering
@@ -15,9 +15,10 @@ At the end of the day, the sheet with looked like this, shown in figure \ref{fig
     \label{fig:dirty_data_robert}
 \end{figure}
 
-Because it was the first time gathering data, some of the values might have been entered incorrectly in the Excel sheet. Nevertheless, Robert goes and makes a nice pie chart to show his boss the findings of that day. The graph in figure \ref{fig:sales_pie_dirty} shows the pie chart with revenue contribution for that day.
+Because it was the first time gathering data, some of the values might have been entered incorrectly in the Excel sheet. Nevertheless, Robert goes and makes a nice pie chart to show his boss the findings of that day. The graph in \autoref{fig:sales_pie_dirty} shows the pie chart with revenue contribution for that day.
+
 Immediately, his boss tells him that he does not believe this graph and walks out of the office. 
-If you look closely at figure \ref{fig:sales_pie_dirty}, you see that something weird has happened. Suddenly, 4 product categories are shown. "Krosant" does not even exist, so this graph cannot be correct either. Also, it could not be true that the shop got 81\% of their revenue through "Baguette", that did not feel right for Robert. Robert just experienced an example of: \textbf{Garbage in, Garbage out.} Somehow, using the data that was gathered, was not helpful at all.
+If you look closely at \autoref{fig:sales_pie_dirty}, you see that something weird has happened. Suddenly, 4 product categories are shown. "Krosant" does not even exist, so this graph cannot be correct either. Also, it could not be true that the shop got 81\% of their revenue through "Baguette", that did not feel right for Robert. Robert just experienced an example of: \textbf{Garbage in, Garbage out.} Somehow, using the data that was gathered, was not helpful at all.
 
 \begin{figure}[h]
     \centering
@@ -26,7 +27,7 @@ If you look closely at figure \ref{fig:sales_pie_dirty}, you see that something 
     \label{fig:sales_pie_dirty}
 \end{figure}
 
-Robert quickly goes back to his sheet to see what went wrong. Taking a closer look, Robert sees that mistakes have been made. He sees that values in figure \ref{fig:dirty_data_robert} cannot be true, as they do not belong to the values that can be possible. For example, "Krosant" must be "Croissant" and a "Baguette" only sells for 3.00 euros, not 30.00. The values that he altered, were \textbf{errors}. After Robert correct the data, it looked like figure \ref{fig:clean_data_robert}.
+Robert quickly goes back to his sheet to see what went wrong. Taking a closer look, Robert sees that mistakes have been made. He sees that values in \autoref{fig:dirty_data_robert} cannot be true, as they do not belong to the values that can be possible. For example, "Krosant" must be "Croissant" and a "Baguette" only sells for 3.00 euros, not 30.00. The values that he altered, were \textbf{errors}. After Robert correct the data, it looked like \autoref{fig:clean_data_robert}.
 
 \begin{figure}[h]
     \centering
@@ -35,7 +36,7 @@ Robert quickly goes back to his sheet to see what went wrong. Taking a closer lo
     \label{fig:clean_data_robert}
 \end{figure}
 
-Being more confident that the saved data is better now, Robert creates a new pie chart, as shown in figure \ref{fig:sales_pie_clean}. Going back to his boss, he shows the new results. 
+Being more confident that the saved data is better now, Robert creates a new pie chart, as shown in \autoref{fig:sales_pie_clean}. Going back to his boss, he shows the new results. 
 ~\\The boss now trusts Roberts results and graph. The chart gives a proper idea on which of the 3 products drive revenue, giving more insights and possibility of acting upon that insight.
 And this is all the result of a single chart and well cleaned data!
 
@@ -58,7 +59,7 @@ As seen in the definition of data cleaning, the goal of error detection is to id
 % What are errors in relational data sources + what are relational data sources?
 Moreover, the focus will be on relational data sources. These types of sources follow the relational model \cite{Codd1970-vj}. This is a structure that presents the data in tuples, or rows. Each row is grouped into relations that are defined for the complete table. A relational dataset has different attributes or columns. Also, each row in that dataset will have a value for these attributes, also called a data cell. Data sources in the relational model are queryable using SQL (Structured Query Language). 
 
-~\\The example data of section \ref{subsec:data_story} is also relational data, as shown in figures \ref{fig:dirty_data_robert} and \ref{fig:clean_data_robert}. While the data in both figures \ref{fig:dirty_data_robert} and \ref{fig:clean_data_robert} refer to the same real-world entities, events or other characteristics, there is a difference between the two. The difference between the two versions is correction of unwanted values to the desired values. The unwanted differences are called errors.
+~\\The example data of \autoref{subsec:data_story} is also relational data, as shown in \autoref{fig:dirty_data_robert} and \autoref{fig:clean_data_robert}. While the data in both \autoref{fig:dirty_data_robert} and \autoref{fig:clean_data_robert} refer to the same real-world entities, events or other characteristics, there is a difference between the two. The difference between the two versions is correction of unwanted values to the desired values. The unwanted differences are called errors.
 ~\\So an error in relational data is a deviation from the desired ground truth values.
 
 % What is the problem? 

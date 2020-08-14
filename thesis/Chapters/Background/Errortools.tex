@@ -1,4 +1,5 @@
 \section{Error detection tools}
+\label{sec:error_detection_tools}
 % Include most commonly used stuff
 In order to automatically identify incomplete, incorrect, inaccurate or irrelevant parts of the data, numerous methods have been proposed in research. First, different base error detection methods \& frameworks will be discussed that follow a single mechanism. In the second subsection, composite methods will be discussed that have state-of-the-art performance and incorporate some combination of different base techniques.
 
@@ -20,7 +21,7 @@ Automatic regular expression inference is possible, for instance as proposed by 
     % Automatic (C)FD detection
         % Problem with erroneous data (finding approximate rules)
 In this part, (conditional) functional dependencies and denial constraints will be discussed. They are among the family of rules/constraints that are similar in the detection of violations, characteristics and approach of creating. The discussed methods are part of a non-exhaustive list of methods that could be used to find errors that are categorized as rule violations. 
-A functional dependency (FD) is a relationship between two attributes of a relational dataset. Meaning that values in a certain column will indicate what values in other columns will be. Given a functional dependency R, a set of attributes (a column) $X$ functionally determines another set of attributes (another column) $Y$, denoted as $X \rightarrow Y$. Each value of $X$ maps to another single value $Y$. So if there is a FD set on columns $Product$ and $Price$ in figure \ref{tab:functionaldependencyviol}, a violation occurs for product "Croissant", indicating that one of them must be an error.
+A functional dependency (FD) is a relationship between two attributes of a relational dataset. Meaning that values in a certain column will indicate what values in other columns will be. Given a functional dependency R, a set of attributes (a column) $X$ functionally determines another set of attributes (another column) $Y$, denoted as $X \rightarrow Y$. Each value of $X$ maps to another single value $Y$. So if there is a FD set on columns $Product$ and $Price$ in \autoref{tab:functionaldependencyviol}, a violation occurs for product "Croissant", indicating that one of them must be an error.
 
 \begin{table}[]
 \centering

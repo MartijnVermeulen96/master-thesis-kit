@@ -1,10 +1,10 @@
 \newpage
 \section{Interpretability}
-To answer the final research question; \textit{Do these data profiles provide more interpretability of error detection tools?}; the results from the experiments as described in section \ref{sec:interpretabilityoftools} will be showed in this section.
+To answer the final research question; \textit{Do these data profiles provide more interpretability of error detection tools?}; the results from the experiments as described in \autoref{sec:interpretabilityoftools} will be showed in this section.
 
 \subsection{Feature selection}
 % Permutation importance feature selection
-To improve machine learning models, dimensionality reduction can be a solution. Permutation importance was calculated for all the features of the dataset profiles for the best performing strategies, after all the estimators were trained. All the features that had a positive impact on the model prediction outcome were kept. 46 out of the original 72 features were kept. Now, using this hindsight information, the models were retrained with only those features. To compare the two sets of features used, the mean squared error (MSE) and median absolute error (MAE) are shown in table \ref{tab:improvements_feature_selection}. It shows that the improvements are negligible.
+To improve machine learning models, dimensionality reduction can be a solution. Permutation importance was calculated for all the features of the dataset profiles for the best performing strategies, after all the estimators were trained. All the features that had a positive impact on the model prediction outcome were kept. 46 out of the original 72 features were kept. Now, using this hindsight information, the models were retrained with only those features. To compare the two sets of features used, the mean squared error (MSE) and median absolute error (MAE) are shown in \autoref{tab:improvements_feature_selection}. It shows that the improvements are negligible.
 
 \begin{table}[h]
 \centering
@@ -21,119 +21,379 @@ Combined F1     & 0.0452         & 0.0790         & 0.0455         & 0.0775
 
 
 \subsection{Feature importance}
-The feature importance will of the dataset profile features will be analyzed using SHAP values of the direct F1-estimators. Each of the six tools will be discussed below.
+The feature importance will of the dataset profile features will be analyzed using SHAP values of the estimators produced in \autoref{sec:performanceprediction}
 
-\subsubsection{FAHES \& ForbiddenItemSets}
-Due to the low average F1-scores for FAHES \& ForbiddenItemSets, it is not possible to extract any SHAP values from the estimators, as the estimate for the F1 is equal to 0. Whilst it was possible to extract interpretations from the precision and recall estimators, these will not be discussed as this is out of scope for this research for now.
+\subsubsection{General F1-score analysis}
+For every best scoring strategy per tool, the feature importance analysis of the direct F1-estimator was done. The extensive results can be found in \autoref{app:feature_importances}. 
+The key takeaways were that for every tool, an increase in $cells\_length\_variance$ and/or  $characters\_alphabet\_variance$ would have a negative impact on the performance (F1).
+This can be contributed to the fact that whenever lengths of cells and the number of alphabetical characters, the data is less structured. Less structured data seems harder to detect errors in.
+
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
 
 \subsubsection{ActiveClean}
-For ActiveClean, the 10 most influential features are shown in figure \ref{fig:most_impact_features_activeclean}. The estimators base the F1 prediction mainly on the variance of characteristics across the different columns a dataset has. Meaning that, if the characteristics of columns differ from each other, the variance for that feature will be higher.
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_ActiveClean.pdf}
-    \caption{ActiveClean - Top 10 influential features according to SHAP values}
-    \label{fig:most_impact_features_activeclean}
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_ActiveClean.pdf}
+    \caption{ActiveClean - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_ActiveClean}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_ActiveClean.pdf}
+    \caption{ActiveClean - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_ActiveClean}
 \end{figure}
 
-The top 3 features and their correlation with impact are displayed in table \ref{tab:top_influence_features_activeclean}. When the cells\_length\_variance is higher, the performance result will be estimated lower. This means that if different columns, have different content sizes, the error detection job most likely becomes harder. This happens with heterogeneous relational data with many different data types and lengths. Also, when there is a lot of difference between the use of alphabetical characters between columns (characters\_alphabet\_variance), so some have many alphabetical characters, others do not, the performance decreases. Lastly, whenever the characters\_numeric\_variance is higher, the performance will increase. This means that if there are columns that have many numerical characters and other columns are non-numerical, it is easier for ActiveClean to differentiate errors. These results can be the effect of the featurizer, tf–idf (term frequency–inverse document frequency), which relies on the frequency of words and word pairs occuring in that data. So if the lengths of attributes and the number of alphabetical characters per column are generally the same, but there are some columns numerical, it is able to correctly group these rows and do error detection.
-
 \begin{table}[H]
-\centering
-\begin{tabular}{llr}
+	\centering
+	\addtolength{\leftskip} {-2cm}
+	\addtolength{\rightskip}{-2cm}
+	\captionsetup[subtable]{position = below}
+	\captionsetup[table]{position=top}
+	\caption{Top feature influences - ActiveClean}
+	\label{tab:feature_influences_ActiveClean}
+		\begin{subtable}{0.5\linewidth}
+		\centering
+		\begin{tabular}{llr}
 \toprule
  \# &                         Feature &         Influence \\
 \midrule
- 1 &         cells\_length\_variance &  -0.48 $\searrow$ \\
- 2 &  characters\_alphabet\_variance &  -0.53 $\searrow$ \\
- 3 &   characters\_numeric\_variance &   0.45 $\nearrow$ \\
+ 1 &         words\_unique\_variance &   0.39 $\nearrow$ \\
+ 2 &         cells\_length\_variance &  -0.42 $\searrow$ \\
+ 3 &  characters\_alphabet\_variance &  -0.39 $\searrow$ \\
 \bottomrule
 \end{tabular}
-\caption{ActiveClean - Top 3 feature influence}
-\label{tab:top_influence_features_activeclean}
+		\caption{Precision feature influences - ActiveClean}
+		\label{tab:prec_feature_influences_ActiveClean}
+	\end{subtable}
+	\hspace*{4em}
+	\begin{subtable}{0.5\linewidth}
+		\centering
+		\begin{tabular}{llr}
+\toprule
+ \# &                     Feature &         Influence \\
+\midrule
+ 1 &         cells\_length\_mean &  -0.09 $\searrow$ \\
+ 2 &  characters\_alphabet\_mean &  -0.12 $\searrow$ \\
+ 3 &       cells\_null\_variance &                 0 \\
+\bottomrule
+\end{tabular}
+		\caption{Recall feature influences - ActiveClean}
+		\label{tab:rec_feature_influences_ActiveClean}
+	\end{subtable}%
 \end{table}
+
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
 
 
 \subsubsection{dBoost}
-For dBoost, the 10 most influential features are shown in figure \ref{fig:most_impact_features_dboost}. 
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_dBoost.pdf}
-    \caption{dBoost - Top 10 influential features according to SHAP values}
-    \label{fig:most_impact_features_dboost}
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_dBoost.pdf}
+    \caption{dBoost - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_dBoost}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_dBoost.pdf}
+    \caption{dBoost - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_dBoost}
 \end{figure}
 
-The top 3 impactful features for dBoost are the same as for ActiveClean. However, the influence of the features is different \ref{tab:top_influence_features_dboost}. if the length of cells across varies more, the performance of dBoost decreases more drastically. The variance in numerical characters does have a high impact on the performance, but no direct correlation, meaning that depending on different features, it might have a positive or negative impact. 
-Concluding, dBoost will perform best in structured data with the same length of cells across the columns.
-
 \begin{table}[H]
-\centering
-\begin{tabular}{llr}
+	\centering
+	\addtolength{\leftskip} {-2cm}
+	\addtolength{\rightskip}{-2cm}
+	\captionsetup[subtable]{position = below}
+	\captionsetup[table]{position=top}
+	\caption{Top feature influences - dBoost}
+	\label{tab:feature_influences_dBoost}
+		\begin{subtable}{0.5\linewidth}
+		\centering
+		\begin{tabular}{llr}
 \toprule
- \# &                         Feature &            Influence \\
+ \# &                         Feature &         Influence \\
 \midrule
- 1 &         cells\_length\_variance &     -0.67 $\searrow$ \\
- 2 &  characters\_alphabet\_variance &     -0.27 $\searrow$ \\
- 3 &   characters\_numeric\_variance &  -0.04 $\rightarrow$ \\
+ 1 &         cells\_length\_variance &  -0.79 $\searrow$ \\
+ 2 &  characters\_alphabet\_variance &  -0.59 $\searrow$ \\
+ 3 &         cells\_unique\_variance &   0.72 $\nearrow$ \\
 \bottomrule
 \end{tabular}
-\caption{dBoost - Top 3 feature influence}
-\label{tab:top_influence_features_dboost}
+		\caption{Precision feature influences - dBoost}
+		\label{tab:prec_feature_influences_dBoost}
+	\end{subtable}
+	\hspace*{4em}
+	\begin{subtable}{0.5\linewidth}
+		\centering
+		\begin{tabular}{llr}
+\toprule
+ \# &                       Feature &         Influence \\
+\midrule
+ 1 &  cells\_punctuation\_variance &  -0.39 $\searrow$ \\
+ 2 &              cells\_null\_max &   0.29 $\nearrow$ \\
+ 3 &         cells\_null\_variance &                 0 \\
+\bottomrule
+\end{tabular}
+		\caption{Recall feature influences - dBoost}
+		\label{tab:rec_feature_influences_dBoost}
+	\end{subtable}%
 \end{table}
+
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+
+\subsubsection{FAHES}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_FAHES.pdf}
+    \caption{FAHES - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_FAHES}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_FAHES.pdf}
+    \caption{FAHES - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_FAHES}
+\end{figure}
+
+
+\begin{table}[H]
+	\centering
+	\addtolength{\leftskip} {-2cm}
+	\addtolength{\rightskip}{-2cm}
+	\captionsetup[subtable]{position = below}
+	\captionsetup[table]{position=top}
+	\caption{Top feature influences - FAHES}
+	\label{tab:feature_influences_FAHES}
+		\begin{subtable}{0.5\linewidth}
+		\centering
+		\begin{tabular}{llr}
+\toprule
+ \# &                         Feature &         Influence \\
+\midrule
+ 1 &         cells\_unique\_variance &   0.67 $\nearrow$ \\
+ 2 &         cells\_length\_variance &  -0.59 $\searrow$ \\
+ 3 &  characters\_alphabet\_variance &  -0.59 $\searrow$ \\
+\bottomrule
+\end{tabular}
+		\caption{Precision feature influences - FAHES}
+		\label{tab:prec_feature_influences_FAHES}
+	\end{subtable}
+	\hspace*{4em}
+	\begin{subtable}{0.5\linewidth}
+		\centering
+		\begin{tabular}{llr}
+\toprule
+ \# &                    Feature &        Influence \\
+\midrule
+ 1 &  cells\_alphabet\_variance &  0.66 $\nearrow$ \\
+ 2 &   cells\_numeric\_variance &  0.61 $\nearrow$ \\
+ 3 &      words\_alphabet\_mean &                0 \\
+\bottomrule
+\end{tabular}
+		\caption{Recall feature influences - FAHES}
+		\label{tab:rec_feature_influences_FAHES}
+	\end{subtable}%
+\end{table}
+
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+
+
+\subsubsection{Forbidden Itemsets}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_ForbiddenItemsets.pdf}
+    \caption{Forbidden Itemsets - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_ForbiddenItemsets}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_ForbiddenItemsets.pdf}
+    \caption{Forbidden Itemsets - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_ForbiddenItemsets}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\addtolength{\leftskip} {-2cm}
+	\addtolength{\rightskip}{-2cm}
+	\captionsetup[subtable]{position = below}
+	\captionsetup[table]{position=top}
+	\caption{Top feature influences - Forbidden Itemsets}
+	\label{tab:feature_influences_ForbiddenItemsets}
+		\begin{subtable}{0.5\linewidth}
+		\centering
+\begin{tabular}{llr}
+\toprule
+ \# &                  Feature &          Influence \\
+\midrule
+ 1 &  cells\_length\_variance &    0.36 $\nearrow$ \\
+ 2 &  cells\_unique\_variance &  0.0 $\rightarrow$ \\
+ 3 &  words\_unique\_variance &   -0.18 $\searrow$ \\
+\bottomrule
+\end{tabular}
+		\caption{Precision feature influences - Forbidden Itemsets}
+		\label{tab:prec_feature_influences_ForbiddenItemsets}
+	\end{subtable}
+	\hspace*{4em}
+	\begin{subtable}{0.5\linewidth}
+		\centering
+\begin{tabular}{llr}
+\toprule
+ \# &                  Feature &        Influence \\
+\midrule
+ 1 &  words\_length\_variance &   0.3 $\nearrow$ \\
+ 2 &       words\_length\_min &  0.23 $\nearrow$ \\
+ 3 &     words\_alphabet\_min &                0 \\
+\bottomrule
+\end{tabular}
+		\caption{Recall feature influences - Forbidden Itemsets}
+		\label{tab:rec_feature_influences_ForbiddenItemsets}
+	\end{subtable}%
+\end{table}
+
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
 
 
 \subsubsection{KATARA}
-For KATARA, the 10 most influential features are shown in figure \ref{fig:most_impact_features_katara}.
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_KATARA.pdf}
-    \caption{KATARA - Top 10 influential features according to SHAP values}
-    \label{fig:most_impact_features_katara}
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_KATARA.pdf}
+    \caption{KATARA - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_KATARA}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_KATARA.pdf}
+    \caption{KATARA - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_KATARA}
 \end{figure}
 
-As shown in table \ref{tab:top_influence_features_KATARA}, again the most influential features for the F1 estimation are the same as for the other tools. The influences are comparable to that of ActiveClean. This can be attributed to the fact that both capture row-wise characteristics. ActiveClean tries to find common or more important words using tf-idf and KATARA tries to find common words and then map those columns of the common words to relations. 
-
 \begin{table}[H]
-\centering
+	\centering
+	\addtolength{\leftskip} {-2cm}
+	\addtolength{\rightskip}{-2cm}
+	\captionsetup[subtable]{position = below}
+	\captionsetup[table]{position=top}
+	\caption{Top feature influences - KATARA}
+	\label{tab:feature_influences_KATARA}
+		\begin{subtable}{0.5\linewidth}
+		\centering
 \begin{tabular}{llr}
 \toprule
- \# &                         Feature &         Influence \\
+ \# &                         Feature &        Influence \\
 \midrule
- 1 &         cells\_length\_variance &   -0.2 $\searrow$ \\
- 2 &  characters\_alphabet\_variance &  -0.09 $\searrow$ \\
- 3 &   characters\_numeric\_variance &   0.32 $\nearrow$ \\
+ 1 &       words\_alphabet\_variance &  0.29 $\nearrow$ \\
+ 2 &         cells\_length\_variance &  -0.2 $\searrow$ \\
+ 3 &  characters\_alphabet\_variance &  0.11 $\nearrow$ \\
 \bottomrule
 \end{tabular}
-\caption{KATARA - Top 3 feature influence}
-\label{tab:top_influence_features_KATARA}
+
+		\caption{Precision feature influences - KATARA}
+		\label{tab:prec_feature_influences_KATARA}
+	\end{subtable}
+	\hspace*{4em}
+	\begin{subtable}{0.5\linewidth}
+		\centering
+\begin{tabular}{llr}
+\toprule
+ \# &                        Feature &            Influence \\
+\midrule
+ 1 &  characters\_punctuation\_mean &  -0.05 $\rightarrow$ \\
+ 2 &     words\_miscellaneous\_mean &     -0.07 $\searrow$ \\
+ 3 &            words\_numeric\_max &      0.38 $\nearrow$ \\
+\bottomrule
+\end{tabular}
+		\caption{Recall feature influences - KATARA}
+		\label{tab:rec_feature_influences_KATARA}
+	\end{subtable}%
 \end{table}
+
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
+% ---------------------------------------------
 
 
 \subsubsection{Raha}
-For Raha, the 10 most influential features are shown in figure \ref{fig:most_impact_features_raha}. Whereas the previous tools were most impacted by the variance based features across columns, Raha is also depending slightly on other features like the maximum of punctuation words used in a column.
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_Raha.pdf}
-    \caption{Raha - Top 10 influential features according to SHAP values}
-    \label{fig:most_impact_features_raha}
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_Raha.pdf}
+    \caption{Raha - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_Raha}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_Raha.pdf}
+    \caption{Raha - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_Raha}
 \end{figure}
 
-But, again the most influential features are characters\_alphabet\_variance, cells\_length\_variance and characters\_numeric\_variance. All have a strongly negative correlation with the performance results estimation, meaning that Raha does better when these characteristics have low variance. This means that it performs best with structured data, with same length content and without too many difference in terms of numerical characters between attributes. Because Raha is also based on the combination of underlying tools like dBoost and KATARA, it is as expected that the F1 score will be influenced by the same characteristics as these tools.
-
 \begin{table}[H]
-\centering
-\begin{tabular}{llr}
+	\centering
+	\addtolength{\leftskip} {-2cm}
+	\addtolength{\rightskip}{-2cm}
+	\captionsetup[subtable]{position = below}
+	\captionsetup[table]{position=top}
+	\caption{Top feature influences - Raha}
+	\label{tab:feature_influences_Raha}
+		\begin{subtable}{0.5\linewidth}
+		\centering
+		\begin{tabular}{llr}
 \toprule
- \# &                         Feature &         Influence \\
+ \# &                              Feature &         Influence \\
 \midrule
- 1 &  characters\_alphabet\_variance &  -0.49 $\searrow$ \\
- 2 &         cells\_length\_variance &  -0.45 $\searrow$ \\
- 3 &   characters\_numeric\_variance &  -0.42 $\searrow$ \\
+ 1 &      characters\_miscellaneous\_mean &  -0.42 $\searrow$ \\
+ 2 &  characters\_miscellaneous\_variance &  -0.35 $\searrow$ \\
+ 3 &              cells\_length\_variance &   -0.2 $\searrow$ \\
 \bottomrule
 \end{tabular}
-\caption{Raha - Top 3 feature influence}
-\label{tab:top_influence_features_raha}
+		\caption{Precision feature influences - Raha}
+		\label{tab:prec_feature_influences_Raha}
+	\end{subtable}
+	\hspace*{4em}
+	\begin{subtable}{0.5\linewidth}
+		\centering
+\begin{tabular}{llr}
+\toprule
+ \# &                              Feature & Influence \\
+\midrule
+ 1 &                cells\_null\_variance &         0 \\
+ 2 &                     cells\_null\_min &         0 \\
+ 3 &  characters\_miscellaneous\_variance &         0 \\
+\bottomrule
+\end{tabular}
+		\caption{Recall feature influences - Raha}
+		\label{tab:rec_feature_influences_Raha}
+	\end{subtable}%
 \end{table}
+
+\newpage
+\subsection{Evaluation}
+\newpage

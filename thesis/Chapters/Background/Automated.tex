@@ -3,7 +3,7 @@
 % What are common type of approaches to find errors automatically
 The perspective in this research is about comparing two versions of the data. One "dirty" dataset and one "clean" dataset. Values from the "dirty" version that are not equal to their "clean" counterparts, are counted as errors. These errors come in all different types, in terms of content or methods of detection. Also, different metrics or scores can be used to evaluate the found errors or to analyze a "dirty" dataset compared to the "clean" version.
  
-In the following subsections, different error types and metrics to evaluate error detection methods will be discussed. Also test datasets and synthetic error generation are discussed to sketch a more complete view of the current error detection environment in research.
+In the following subsections, different error types and metrics to evaluate error detection methods will be discussed. A summary on different available error detection tools and their workings will be discussed. Also, the basics datasets in this field and synthetic error generation are discussed to sketch a more complete view of the current error detection environment in research.
 
 \subsection{Error types}
 \label{subsec:errortypes}
@@ -83,7 +83,7 @@ Public benchmark methods for error detection and data cleaning in relational dat
     \item Outliers
     \item Missing Values
 \end{enumerate}
-Types 2, 3 and 5 are known from other research, whereas inconsistencies and mislabels are more niche category descriptions. Inconsistencies can be covered as rule violations and mislabels would fall under the "Other errors" from section \ref{subsec:errortypes}. Unfortunately, this method does not cover holistic data cleaning. Due to the high overlap in both the descriptions of error types, in combination with treating single error types separately, it cannot properly tackle the task at hand in this thesis.
+Types 2, 3 and 5 are known from other research, whereas inconsistencies and mislabels are more niche category descriptions. Inconsistencies can be covered as rule violations and mislabels would fall under the "Other errors" from \autoref{subsec:errortypes}. Unfortunately, this method does not cover holistic data cleaning. Due to the high overlap in both the descriptions of error types, in combination with treating single error types separately, it cannot properly tackle the task at hand in this thesis.
 
 \paragraph{Data quality estimation} is a way of evaluating the results of a cleaning method, without knowing the ground truth. The research by \cite{Chung2017-cl} shows a method to estimate data quality, by letting a human iteratively judge parts of the data, to get a good estimate of the accuracy and quality, without having access to the ground truth beforehand. Its main point of view is estimating the number of errors based on the initial "dirty" dataset. This aligns with the goals of this thesis. However, because the ground truth is known for all the used datasets and due to the stochastic nature of this method, it is not suited for the empirical study in the upcoming sections. This concept might be used as an extension to this work, when adding larger datasets where the ground truth is not known beforehand.
 
@@ -93,7 +93,7 @@ Types 2, 3 and 5 are known from other research, whereas inconsistencies and misl
 In contrary to the limited number of benchmark methods in data cleaning, there have been many efforts to publish clean and dirty dataset pairs, to be used for evaluating error detection and repairing methods. Also, it has been used in research to synthetically introduce errors in datasets that were clean beforehand.
 
 \subsubsection{Datasets}
-A list of datasets extracted from different papers and researches will be used in this thesis. There are multiple ways of communicating a dirty version of a dataset and its ground truth counterpart. The most useful way for this research of denoting a dataset and its ground truth is explained by \cite{Mahdavi2019-zf}. A clean and dirty version are handled as deterministic and known values. The datasets will be provided by 2 different files (or in-memory tables), like depicted in figures \ref{fig:dirtydataset} and \ref{fig:cleandataset}. Whenever such a dirty-clean dataset pair is used, it is assumed to be correct. The difficulty of data cleaning lies in the ambiguity of what the ground truth might be. 
+A list of datasets extracted from different papers and researches will be used in this thesis. There are multiple ways of communicating a dirty version of a dataset and its ground truth counterpart. The most useful way for this research of denoting a dataset and its ground truth is explained by \cite{Mahdavi2019-zf}. A clean and dirty version are handled as deterministic and known values. The datasets will be provided by 2 different files (or in-memory tables), like depicted in \autoref{fig:dirtydataset} and \autoref{fig:cleandataset}. Whenever such a dirty-clean dataset pair is used, it is assumed to be correct. The difficulty of data cleaning lies in the ambiguity of what the ground truth might be. 
 
 \begin{figure}[h]
 \centering
