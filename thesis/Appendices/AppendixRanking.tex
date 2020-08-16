@@ -1,0 +1,51 @@
+\chapter{Ranking} % Main appendix title
+\label{app:ranking}
+The following tables are a supplement to the baseline comparison for \autoref{subsec:results_ranking_evaluation}.
+
+\begin{table}[H]
+\centering
+\caption{Mean tool-wise NDCG comparison for tool ranking}
+\begin{tabular}{lllr}
+\toprule
+{} &  Baseline &  Estimator &  Improvement \\
+Metric          & Mean NDCG  &  Mean NDCG  &              \\
+\midrule
+Combined F1 &  \textbf{0.953} &           0.942 &       -0.012 \\
+F1          &  \textbf{0.958} &           0.956 &       -0.002 \\
+Precision   &  \textbf{0.939} &           0.934 &       -0.005 \\
+Recall      &           0.964 &  \textbf{0.972} &        0.009 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Mean NDCG comparison for configuration ranking Raha}
+\begin{tabular}{lrrr}
+\toprule
+{} &  Baseline &  Estimator &   \\
+Metric          & Mean NDCG  &  Mean NDCG  &       Improvement       \\
+\midrule
+Combined F1 &               0.702 &                \textbf{0.807} &        0.105 \\
+F1       &               0.731 &                \textbf{0.824} &        0.092 \\
+Precision     &               0.652 &                \textbf{0.802} &        0.150 \\
+Recall      &               0.913 &                \textbf{0.970} &        0.057 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Mean NDCG comparison for configuration ranking dBoost}
+\begin{tabular}{lrrr}
+\toprule
+{} &  Baseline &  Estimator &   \\
+Metric          & Mean NDCG  &  Mean NDCG  &       Improvement       \\
+\midrule
+Combined F1 &               0.424 &                \textbf{0.572} &        0.149 \\
+F1       &               \textbf{0.521} &                0.492 &       -0.029 \\
+Precision     &               0.565 &                \textbf{0.647} &        0.082 \\
+Recall      &               \textbf{0.911} &                0.829 &       -0.083 \\
+\bottomrule
+\end{tabular}
+\end{table}

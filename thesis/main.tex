@@ -174,7 +174,17 @@ headsepline, % Uncomment to get a line under the header
 \large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
 \textit{in the}\\[0.4cm]
 \groupname\\\deptname\\[2cm] % Research group name and department name
- 
+
+
+\vfill
+\begin{tabular}{lll}
+Student number: & 4390784 & \\
+Thesis committee: & Prof.dr.ir. G.J.P.M. Houben, & TU Delft, chair \\
+& Dr. A. Katsifodimos, & TU Delft, supervisor \\
+& Dr.ir. G. Gousios, & TU Delft \\
+\end{tabular}
+
+~\\~\\An electronic version of this thesis is available at \url{https://repository.tudelft.nl/}.
 \vfill
 
 {\large \today}\\[4cm] % Date
@@ -227,7 +237,23 @@ headsepline, % Uncomment to get a line under the header
 \begin{abstract}
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
 % The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too
-\ldots to be finished \ldots
+
+% An opening statement  related to your research  subject to attract readers. 
+\noindent The amount of data being collected is growing exponentially, both in academics as well as in business. Unfortunately, the quality of that data can be poor, leading to poor decisions and increasing costs. Data cleaning, the process of detecting and correcting errors from a dataset, could be the solution to improve bad data.
+
+% ② Introduce the research problem point you investigated. 
+\noindent This research focuses on detecting these errors. There are (semi-)automated error detection tools available, but it is unclear how well these tools perform under varying conditions and on different datasets.
+
+% ③ State the overall  purpose  of  the  study.
+\noindent Following from this problem, the main research question was developed: How to choose a fitting error detection algorithm for a specific relational dataset?
+
+% ④  Clarify  the  basic method  you  used;  analytical/experimental/ numerical/CFD/….
+\noindent To answer this question, a comparative study has been done for error detection tools on relational data. An interactive error detection tool, Raha, performed best from the selected state of the art tools.
+
+\noindent Subsequently, an attempt was made to estimate the performance of error detection tools and particular configurations on unseen datasets, based on high-level profiles of these datasets. According to the qualitative and quantitative experiments in this research, the proposed estimators have been shown to be effective. Moreover, the performance estimators were analyzed to provide more interpretability on the functioning of the error detection tools on the datasets in this research.
+
+\noindent Ultimately, these performance estimators were used to generate suggested rankings of error detection strategies. The produced system outperformed the set baseline and was able to create valuable rankings. The proposed strategy ranking system could help real-world computer scientists and data experts choose a fitting error detection algorithm for a specific relational dataset.
+
 \end{abstract}
 
 %----------------------------------------------------------------------------------------
@@ -236,12 +262,16 @@ headsepline, % Uncomment to get a line under the header
 
 \begin{acknowledgements}
 \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
-I would like to thank my supervisors Asterios and Christos for guiding me with this research. They have both been very helpful, even in these weird and difficult times. Also, I would like to thank my other committee members, Geert-Jan and Georgios, for taking the time and effort for being part of the final process of this thesis. 
+First of all, I would like to thank my supervisors Dr. Asterios Katsifodimos and Christos Koutras, for guiding me with this research. I have great respect for the recovery of Asterios and am truly grateful that he was still able to be part of the completion of this thesis. Furthermore, I would like to thank Christos for always being available for all the discussions we had, even if, due to circumstances in 2020, the meetings could not be in person. This thesis would not have been possible without all your help, conversations and ideas.
+
+Also, I would like to thank my other committee members, Prof.dr.ir. Geert-Jan Houben and Dr.ir. Georgios Gousios, for taking the time and effort to be part of this thesis's final process. 
+
+In addition, thanks to the TU Delft and especially the Faculty of Electrical Engineering, Mathematics \& Computer Science, which has been my academic home for the past six years, completing a BSc Electrical Engineering and now the MSc Computer Science.
+
+Last but not least, I would like to thank friends and family for helping me throughout the process, by reading my thesis, thinking along or just having a good conversation with me about all kinds of subjects.
 
 
 % The acknowledgments and the people to thank go here, don't forget to include your project advisor
-
-\ldots to be finished \ldots
 \end{acknowledgements}
 
 %----------------------------------------------------------------------------------------
@@ -258,15 +288,8 @@ I would like to thank my supervisors Asterios and Christos for guiding me with t
 %	ABBREVIATIONS
 %----------------------------------------------------------------------------------------
 
-\hide
-\begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
 
-\textbf{CS} & \textbf{C}omputer \textbf{S}cience\\
-\textbf{ML} & \textbf{M}achine \textbf{L}earning\\
-
-\textbf{PCA} & \textbf{P}rincipal \textbf{C}omponente \textbf{A}nalysis\\
-\end{abbreviations}
-\unhide
+\include{Chapters/Abbreviations}
 
 %----------------------------------------------------------------------------------------
 %	PHYSICAL CONSTANTS/OTHER DEFINITIONS
@@ -335,6 +358,7 @@ $\omega$ & angular frequency & \si{\radian} \\
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
+\include{Appendices/AppendixRanking}
 \include{Appendices/AppendixFeature}
 % \include{Appendices/AppendixA}
 %\include{Appendices/AppendixB}

@@ -1,30 +1,44 @@
 \chapter{Conclusion \& Future Work}
 \label{chap:conclusion}
-\paragraph{Conclusions}
-In this thesis, a comparative study has been done for error detection tools on relational data. 
+\section*{Conclusion}
+In this thesis, a comparative study has been done for error detection tools on relational data. Subsequently, an attempt was made to estimate performance of error detection tools and particular configurations on unseen datasets, based on high-level profiles of these datasets. These estimators were used to generate suggested rankings of error detection strategies. Ultimately, these estimators were analyzed to provide more interpretability on the functioning of the error detection tools on the datasets in this research.
+In this research, multiple research questions were proposed in \autoref{sec:researchquestions}. The methodology for experiments in this work and to answer these research questions was given in \autoref{chap:methodology}. Below, each research question will be restated and answered according to the findings in \autoref{chap:results}.
+
 % RQ1 What is the current state of the art and what is the performance of these tools?
-The current state of the art was represented by 6 error detection tools with different underlying techniques. An empirical study was done on 14 datasets with a range of characteristics. Out of the 6 tools, Raha, an interactive tool performed best overall. However, the performance results of human interactive tools was highly dependent on the accuracy of the human in the loop.
+\paragraph{Research Question 1:} \textit{What is the current state of the art and what is the performance of these tools?}
+~\\The current state of the art was represented by six error detection tools with different underlying techniques: ActiveClean, dBoost, FAHES, Forbidden Itemsets, KATARA and Raha. An empirical study was done on 14 datasets with a range of characteristics. Out of the six tools, Raha, an interactive tool performed best on average, with regards to the F1-score. However, the performance results of human interactive tools were highly dependent on the accuracy of the human in the loop.
 
 % RQ2 Is it possible to create an extensive data profile to estimate performance on unseen datasets?
-Then, a data profile without any previous knowledge about the dataset was created. Using this data profile, the performance results of the error detection tools and their configuration were estimated. With a median absolute error of 0.079 to estimate the F1-score of left out datasets, the estimation has proven to be worthwhile. 
+\paragraph{Research Question 2:} \textit{Is it possible to create an extensive data profile to estimate performance on unseen datasets?}
+~\\A data profile about the dataset was created without any foreknowledge about that dataset. Using this data profile, the performance results of the error detection tools and their configuration were estimated. The proposed estimators were evaluated on the test datasets and the empirical results from the previous research question. The errors of these estimations on real performance scores were evaluated qualitatively by looking at the distribution of estimation errors. The distributions were heavily centered around 0, indicating low errors, without any outliers of high errors. The estimator also clearly outperformed the baseline estimation method. So, both qualitatively and quantitatively, it was found to be possible to create an extensive data profile to estimate performance on unseen datasets using the proposed estimator models.
 
 % RQ3 Is it possible to generate a ranking of tools according to their performance on unseen datasets?
-Using the meaningful estimators, an estimated suggested ranking of error detection strategies for an unseen dataset was created. The strategy ranking system was able to generate near perfect tool rankings for a dataset, when looking only at the tools suggested. Ranking the tools with only 1 configuration and scoring the ranking based on that configuration was a harder task, but was performing promising in general. Also, the strategy ranking 
+\newpage
+\paragraph{Research Question 3:} \textit{Is it possible to generate a ranking of tools according to their performance on unseen datasets?}
+~\\Using the proposed performance estimators, an estimated suggested ranking of error detection strategies for an unseen dataset was created. The proposed system outperformed the set baseline and was able to create valuable rankings for different tasks, namely tool ranking and configuration ranking for a specific tool. This has shown that it is possible to generate a ranking of tools according to their performance on unseen datasets, with the proposed ranking system. 
 
 % RQ4 Do these data profiles provide more interpretability of error detection tools?
-Lastly, the error detection tool performance estimators were analyzed to provide interpretability on how and when an error detection strategy would perform well. Found was that the F1 measure was mostly impacted by how structured the data was, with most tools performing better when columns of the data have similar length and contained similar numbers of alphabetical characters. 
+\paragraph{Research Question 4:} \textit{Do these data profiles provide more interpretability of error detection tools?}
+~\\Lastly, the error detection tool performance estimators were analyzed to provide interpretability on how and when an error detection strategy would perform well. The proposed automated feature selection, based on feature importance, did not improve estimation results. However, providing logic and relations between performance scores and the dataset input features was deemed possible. Found was that the F1-measure was mostly impacted by how structured the data was, with most tools performing better when columns of the data have similar length and contained similar numbers of alphabetical characters. For precision and recall, a detailed overview of the impact of dataset profile features was given. For the majority of the tools, a link between a dataset characteristic (dataset profile feature) and the influence on a performance score could be made. The data profiles did provide more interpretability of error detection tools, but in order to integrate the method into the error detection workflow and verify the results, more work needs to be done. 
 
 % RQ How to choose a fitting error detection algorithm for a specific relational dataset?
-These findings can all be combined to answer the main research question: \textit{How to choose a fitting error detection algorithm for a specific relational dataset?} 
-\\By using the knowledge from the empirical study, a user is able to see which tools are performing well in general. Then, for a detailed choice, the user can use a suggested strategy ranking for that specific relational dataset, in order to find the best tool and configuration in a substantiated manner.
+\paragraph{Main Research Question:} \textit{How to choose a fitting error detection algorithm for a specific relational dataset?}
+~\\By using the knowledge from the empirical study, a user is able to see which tools are performing well in general. Then, for a detailed choice, the user can use a suggested strategy ranking for that specific relational dataset, to find the best tool and configuration in a substantiated manner. The strategy ranking system and underlying performance estimators proposed in this work have shown to be effective in suggesting a particular error detection tool and matching configuration for an unseen dataset. The strategy ranking system's outcomes could help choose a fitting error detection algorithm for a specific relational dataset.
 
-\paragraph{Future work}
-Besides the possible improvements and considerations discussed in the results from \autoref{chap:results}, there are multiple next steps that could improve the research presented in this thesis:
-\begin{itemize}
-    \item Estimating the runtime of error detection tools
-    \item Integrate more error detection tools
-    \item Creating an online repository for adding new datasets and error detection strategies
-    % \item Precision focused research. High precision methods allow for automated error detection. 
-\end{itemize}
-% Estimating runtime
-% Online repository
+\section*{Future work}
+Besides the possible improvements and considerations discussed in the results from \autoref{chap:results}, there are multiple next steps that could additionally improve the research presented in this thesis. Below, a non-exhaustive list of possible next steps is presented:
+
+~\\- \textit{Estimating the runtime of error detection tools}
+~\\ To give a complete suggestion for experts in the data cleaning and error detection field, runtime estimations of the tools could also be included. Not only would an expert then be able to choose a preferred error detection strategy based on performance scores, but would also be able to make a cost-effective decision.
+
+~\\- \textit{Integrate more error detection tools and add new datasets}
+~\\ The research could be expanded with more state of the art tools and more error type-specific tools. Also, adding more datasets would add more data, substantiating the findings and improving the performance estimators.
+
+~\\- \textit{Creating an online repository for the suggestion results}
+~\\ The newly added tools, datasets and performance results for the empirical study could be published and shared online, in order to provide access directly to experts. Also, new tools and datasets can then be easily adapted by outsiders. More knowledge would lead to more expertise in the suggestion system.
+
+~\\- \textit{A balanced number of strategies per tool}
+~\\ The estimators were evaluated on all configurations for all tools. However, for some tools, many more configurations exist than for others. This gives an imbalanced training and minimization problem. The number of configurations per tool could be normalized, or scoring could be discounted for the tools with excessive amounts of configurations. Creating a balanced optimization and learning problem could improve the overall predictive capabilities and generated rankings. 
+
+~\\- \textit{Error correction tools}
+~\\ The focus of this research has been on error detection tools. The next step after error detection would be the correction of these errors. Error detection is a highly complex and heterogeneous problem, but automated error correction is even more so. However, the same steps (empirical study $\rightarrow$ performance prediction $\rightarrow$ strategy ranking) could be applied for evaluating error correction tools. This could be beneficial for the complete data cleaning workflow of computer scientists working on relational data.

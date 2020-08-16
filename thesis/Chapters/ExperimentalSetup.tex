@@ -1,4 +1,5 @@
 \chapter{Experimental setup}
+\label{chap:experimental_setup}
 \section{Selected datasets}
 \label{sec:selected_datasets}
 A summary of the list of datasets used for the empirical study, performance estimation and ranking of error detection strategies can be found below (\autoref{tab:dataset-error-types}). The datasets were taken from published data from the following papers: 
@@ -36,12 +37,12 @@ A summary of the list of datasets used for the empirical study, performance esti
 \label{tab:dataset-error-types}
 \end{table}
 
-\paragraph{AirBnb}
-This dataset contains 42,492 records on hotels in the top 10 tourist destinations and major US metropolitan areas scraped from Airbnb.com. Each record has 40 attributes including the number of bedrooms, price, location, etc. Demographic and economic attributes were scraped from city-data.com. The classification task is to determine whether the rating of each hotel is 5 or not.
+\paragraph{Airbnb}
+This dataset contains 42,492 records on hotels in the top 10 tourist destinations and major US metropolitan areas scraped from Airbnb.com. Each record has 40 attributes, including the number of bedrooms, price, location, etc. Demographic and economic attributes were scraped from city-data.com. The classification task is to determine whether the rating of each hotel is 5 or not.
 \\(Source: CleanML)
 
 \paragraph{Beers} 
-This dataset contains a list of different beers. The attributes are numeric ID's, foreign keys, names, City, state abbreviation, includes amount of ounces \& percentage alcohol.
+This dataset contains a list of different beers. The attributes are numeric ID's, foreign keys, names, City, state abbreviation, amount of ounces \& percentage of alcohol.
 \\(Source: ED2, REDS, Raha)
 
 \paragraph{EEG}
@@ -57,7 +58,7 @@ This source contains a list of hospital experiments. Attributes include ID, hosp
 \\(Source: REDS, Raha)
 
 \paragraph{Marketing}
-This dataset consists of 8,993 records about household income from a survey. Each record has 14 demographic attributes including sex, education, etc. Another attribute is a classification task is to predict if the annual household income is less than \$25,000.
+This dataset consists of 8,993 records about household income from a survey. Each record has 14 demographic attributes, including sex, education, etc. Another attribute is a classification task is to predict if the annual household income is less than \$25,000.
 \\(Source: CleanML)
 
 \paragraph{Movies}
@@ -74,11 +75,11 @@ This dataset contains a set of published articles. The attributes include the ti
 \\(Source: REDS, Raha)
 
 \paragraph{Restaurants}
-This source is a list of restaurants. Attributes contain the name, address, phone number, website and other attributes that our commonly found on restaurant review websites (like rating value and price range).
+This source is a list of restaurants. Attributes contain the name, address, phone number, website and other attributes that are commonly found on restaurant review websites (like rating value and price range).
 \\(Source: ED2)
 
 \paragraph{Restaurant}
-Same idea as "Restaurants", but less columns.
+This dataset contains similar information as "Restaurants", but has fewer columns.
 \\(Source: CleanML)
 
 \paragraph{Toy}
@@ -86,11 +87,11 @@ Dummy set for testing purposes \& testing for generalizability
 \\(Source: REDS, Raha)
 
 \paragraph{University}
-This dataset contains 286 records about universities. Each record has 17 attributes including state, university name, SAT scores, etc. It contains a column with a classification task is to predict whether the expenses are greater than 7,000 for each university. This dataset contains inconsistent representations for states and locations.
+This dataset contains 286 records about universities. Each record has 17 attributes, including state, university name, SAT scores, etc. It contains a column with a classification task is to predict whether the expenses are greater than 7,000 for each university. This dataset contains inconsistent representations for states and locations.
 \\(Source: CleanML)
 
 \paragraph{Uscensus}
-This dataset contains 32,561 US Census records for adults. Each record has 14 attributes including age, education, sex, etc. It also contains an attribute with a classification goal of predicting whether the adult earns more than \$50,000. 
+This dataset contains 32,561 US Census records for adults. Each record has 14 attributes, including age, education, sex, etc. It also contains an attribute with a classification goal of predicting whether the adult earns more than \$50,000. 
 \\(Source: CleanML)
 
 
@@ -124,10 +125,10 @@ This dataset contains 32,561 US Census records for adults. Each record has 14 at
 To measure the performance of tools on test datasets, metrics of two types can be used. Cell-based and row-based metrics. The difference lies in what is taken as an entity while calculating scores.
 
 \subsubsection{Cell-based metrics}
-Cell-based metrics, are metrics that identify each cell in a dataset as a separate entity in the test set. Each cell will be counted as 1 positive or negative. 
+Cell-based metrics identify each cell in a dataset as a separate entity in the test set. Each cell will be counted as one positive or negative error value.
 
 \subsubsection{Row-based metrics}
-Row-based metrics, are metrics that identify each row in a dataset as a separate entity in the test set. A row could contain multiple errors, but only the whole row is counted as 1 positive or negative.
+Row-based metrics identify each row in a dataset as a separate entity in the test set. A row could contain multiple errors, but only the whole row is counted as one positive or negative error value.
 
 \subsubsection{Scores}
 In the case of error detection, instances are either erroneous (positive) or clean (negative). Because the ground truth of the datasets in \autoref{subsec:datasets} is known, the performance metrics can be calculated directly after the execution of a tool. 
@@ -139,21 +140,21 @@ The following performance scores will be kept after experiments and estimated in
 \end{itemize}
 
 \subsubsection{Examples}
-To provide visual aid for the different metrics proposed, examples are shown in \autoref{fig:error_row_wise}. In the figure, the real errors (difference between dirty dataset and the ground truth) are labeled cell-wise by underling and displaying in bold. The "detected" errors by the fictional error detection strategies are shown with a red background. In contrast to the cell-wise detection, the erroneous rows are marked by the black arrows to the left. The "detected" faulty rows are marked by the red arrows on the right.
+To provide visual aid for the different metrics proposed, two examples of error detection outputs are shown in \autoref{fig:error_row_wise}. In the figure, the real errors (difference between dirty dataset and the ground truth) are labeled cell-wise by underling and displaying in bold. The "detected" errors by the fictional error detection strategies are shown with a red background. In contrast to the cell-wise detection, the erroneous rows are marked by the black arrows to the left. The "detected" faulty rows are marked by the red arrows on the right.
 
 \begin{figure}[h]
 \centering
     \begin{subfigure}{0.9\textwidth}
         \includegraphics[width=\linewidth]{thesis/Figures/Method/Errors_dataset_F1_row.png}
-        \caption{}
+        \caption{A perfect error detection output example}
         \label{subfig:errors_row}
     \end{subfigure}
     \begin{subfigure}{0.9\textwidth}
         \includegraphics[width=\linewidth]{thesis/Figures/Method/Errors_dataset_Worse_F1_row.png}
-        \caption{}
+        \caption{A worse error detection output example}
         \label{subfig:errors_row_worse}
     \end{subfigure}
-    \caption{Two examples of error detection. Real errors are underlined and bold. Example outputs by error detection methods are marked in red.}
+    \caption{Two examples of error detection outputs. Real errors are underlined and bold. Example outputs by error detection methods are marked in red.}
     \label{fig:error_row_wise}
 \end{figure}
 
@@ -161,7 +162,7 @@ To provide visual aid for the different metrics proposed, examples are shown in 
 \\For \autoref{subfig:errors_row}, there is a total of 5 real error cells. The detection algorithm marks all 5 errors correctly. So $precision = \frac{5}{5} = 1$, $recall = \frac{5}{5} = 1$ and $F1 = 2 \times \frac{1 \times 1}{1 + 1} = 1$. 
 \\For \autoref{subfig:errors_row_worse}, there are also the same 5 real error cells. The detection algorithm marks only 1 error correctly and 3 more incorrectly. So $precision = \frac{1}{4} = 0.25$, $recall = \frac{1}{5} = 0.2$ and $F1 = 2 \times \frac{0.25 \times 0.2}{0.25 + 0.2} = 0.22$. 
 
-~\\\textbf{Row-wise scores} for the two examples are different than the cell-wise performance scores.
+~\\\textbf{Row-wise scores} for the two examples are different from the cell-wise performance scores.
 \\For \autoref{subfig:errors_row}, there is a total of 3 real error rows. The detection algorithm marks all 3 rows correctly. So $precision = \frac{3}{3} = 1$, $recall = \frac{3}{3} = 1$ and $F1 = 2 \times \frac{1 \times 1}{1 + 1} = 1$. 
 \\For \autoref{subfig:errors_row_worse}, there are also the same 3 real error rows. The detection algorithm marks only 1 row correctly and 2 more incorrectly. So $precision = \frac{1}{3} = 0.33$, $recall = \frac{1}{3} = 0.2$ and $F1 = 2 \times \frac{0.33 \times 0.33}{0.33 + 0.33} = 0.33$. 
 
@@ -176,10 +177,10 @@ To provide visual aid for the different metrics proposed, examples are shown in 
 \label{tab:cell_vs_row_scores}
 \end{table}
 
-~\\For this research, \textbf{cell-wise scores} will be used to measure the performance of error detection strategies. The goal of error detection in this thesis is to holistically find all different types of errors. Unlike for example duplicate rows, most other errors are defined only for single cells. To also include duplicate rows in the scoring, the complete row is marked as erroneous. The error detection algorithms will be scored accordingly.
+~\\For this research, \textbf{cell-wise scores} will be used to measure the performance of error detection strategies. The goal of error detection in this thesis is to find all different types of errors holistically. Unlike, for example, duplicate rows, most other errors are defined only for single cells. To also include duplicate rows in the scoring, the complete row is marked as erroneous. The error detection algorithms will be scored accordingly.
 
 \section{Error detection tool configurations}
-After generating configurations with the settings shown in \autoref{sec:empiricalstudy}, the number of strategies per tool are shown in \autoref{tab:number_configs_tool}. However, not all strategies will be able to produce results within the timeouts.
+After generating configurations with the settings shown in \autoref{sec:empiricalstudy}, the number of strategies per tool is shown in \autoref{tab:number_configs_tool}. However, not all strategies will be able to produce results within the timeouts.
 
 \begin{table}[H]
 \centering
@@ -202,4 +203,4 @@ FAHES             &                   4 \\
 
 \section{Computer specification}
 Experiments were run on a computer with an Intel Core i7 8750H processor using 16 GB of RAM, running Ubuntu 18.04 as Windows Subsystem for Linux 2. % running at 2.20 GHz base, 4.1 GHz max 
-The max runtime for a single experiment was limited at 1800 seconds (half hour). A timeout error would occur after that and the experiment would be canceled. 
+The maximum runtime for a single experiment was limited at 1800 seconds (half-hour). A timeout error would occur after that, and the experiment would be canceled. 

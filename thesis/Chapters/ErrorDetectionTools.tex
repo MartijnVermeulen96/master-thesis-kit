@@ -1,46 +1,46 @@
 \chapter{Selected tools}
 \label{chap:selectedtools}
-In this subsection, the tools explicitly used in this research will be discussed. Besides the summaries in \autoref{sec:error_detection_tools}, a review focused on the inner workings with respect to error types (from \autoref{subsec:errortypes}) will be given below. 
-The selected tools below represent the current state of the art in error detection tools. From the background research in \autoref{chap:background}, a subset of tools that was open-source or easily implementable were adapted and used in this research. The selected tools cover all the four main error types, of which a reference can be found in \autoref{sec:error_type_coverage}.
+In this subsection, the tools explicitly used in this research will be discussed. Besides the summaries in \autoref{sec:error_detection_tools}, a review focused on the inner workings with regards to error types (from \autoref{subsec:errortypes}) will be given below. 
+The selected tools below represent the current state of the art in error detection tools. From the background research in \autoref{chap:background}, a subset of tools that was open-source or easily implementable was adapted and used in this research. The selected tools cover all the four main error types, of which a reference can be found in \autoref{sec:error_type_coverage}.
 
 \section{Tools}
-\subsection{ActiveClean \cite{Krishnan2016-rg}}
+\subsection{ActiveClean (\cite{Krishnan2016-rg})}
 This tool uses a \textbf{human in the loop to actively learn} which rows are errors. 
-The main idea of active learning will be reused for this thesis. The researchers have proposed a basic data flow which describes how to implement an active cleaning method. 
-The implementation created for this work uses tf-idf features (frequency–inverse document frequency), created using the scikit-learn \verb|TfidfVectorizer|. Then, a linear model binary classifier is trained on the humanly labeled samples first and in following iterations also on self-labeled erroneous rows. The implementation treats each row as a document. 
-Treating each row as a document allows to capture relational information. This allows for catching \textbf{rule violations}. If values across columns co-occur multiple times, the classifier can learn from the human labeling whether these co-occurrences are erroneous or valid. The downside of this technique is that a full row will be labeled as either the truth or erroneous. However, on the positive side, it might be able to catch duplicate rows and mark these rows completely as erroneous, making it an error detection tool that could spot \textbf{duplicates}.
+The main idea of active learning will be reused for this thesis. The researchers have proposed a basic data flow that describes how to implement an active cleaning method. 
+The implementation created for this work uses tf-idf features (frequency-inverse document frequency), created using the scikit-learn \verb|TfidfVectorizer|. Then, a linear model binary classifier is trained on the humanly labeled samples first and in following iterations, also on self-labeled erroneous rows. The implementation treats each row as a document. 
+Treating each row as a document allows the tool to capture relational information. This allows for catching \textbf{rule violations}. If values across columns co-occur multiple times, the classifier can learn from human labeling whether these co-occurrences are erroneous or valid. The downside of this technique is that a full row will be labeled as either the truth or erroneous. However, on the positive side, it might be able to catch duplicate rows and mark these rows completely as erroneous, making it an error detection tool that could spot \textbf{duplicates}.
 
 \subsection{dBoost (\cite{Pit--Claudel2016-dj})}
-dBoost is a tool that does "Outlier Detection in Heterogeneous Datasets using Automatic Tuple Expansion". It uses \textbf{expansion of data tuples using knowledge about the schema and field types to detect outliers}.
-The values retrieved from the expanded data tuples will then be modeled using histograms, univariate Gaussian models or multivariate Mixture models. Whenever the value of a histogram category for a data value is too low, it will be marked as erroneous. Also, whenever a value lies in the part of a Gaussian model with density lower than a configured threshold, it will be marked as erroneous. 
+dBoost is a tool that uses \textbf{expansion of data tuples using knowledge about the schema and field types to detect outliers}. The values retrieved from the expanded data tuples will then be modeled using histograms, univariate Gaussian models or multivariate Mixture models. Whenever the value of a histogram category for a data value is too low, it will be marked as erroneous. Also, whenever a value lies in the part of a Gaussian model with a density lower than a configured threshold, it will be marked as erroneous. 
 
 The data tuple expansion firstly allows for finding \textbf{pattern violations}. 
-Also, due to the multivariate Gaussian models, co-occurrences of values across columns can be taken into account. This makes it possible to find \textbf{rule violations}.
-And lastly, of course (numerical) \textbf{outliers} are detectable with this method. dBoost will model numerical values with the Gaussian model. Outliers in this model will be simply marked erroneous. 
+Due to the multivariate Gaussian models, co-occurrences of values across columns can be taken into account. This makes it possible to find \textbf{rule violations}.
+Lastly, of course, (numerical) \textbf{outliers} are detectable with this method. dBoost will model numerical values with the Gaussian model. Outliers in this model will be simply marked as erroneous. 
 
 \subsection{FAHES (\cite{Qahtan2018-te})}
-A disguised missing values detector. Whereas most missing value detector focus only on NULL or empty values, this tool takes a different approach. They \textbf{categorize detectable disguised missing values} into five different cases: 1. Out of range data values 2. Outliers 3. String with repeated characters or characters that are next to each other on the used keyboard 4. Values with non-conforming data types 5. Valid values that are randomly distributed within the range of the data and used frequently in the data set. 
-Because missing values are categorized as \textbf{rule violations} as stated in \autoref{subsec:errortypes}, this method can only detect those types of errors. 
+FAHES is a \textbf{disguised missing values detector}. Whereas most missing value detectors focus only on NULL or empty values, this tool takes a different approach. They categorize detectable disguised missing values into five different cases: 1. Out of range data values 2. Outliers 3. String with repeated characters or characters that are next to each other on the used keyboard 4. Values with non-conforming data types 5. Valid values that are randomly distributed within the range of the data and used frequently in the data set. 
+Because missing values are categorized as \textbf{rule violations}, as stated in \autoref{subsec:errortypes}, this method can only detect those types of errors. 
 
 \subsection{Forbidden Itemsets (\cite{Rammelaere2019-ea})}
-Applies \textbf{constraint-like method} to detect and repair invalid entries in a dataset. The proposed so-called forbidden itemsets capture unlikely value co-occurrences, similar to denial constraints. Denial constraints are formal method of describing rule violations. Due to the similarity of the Forbidden Itemsets with these rules, this method only is capable of detection \textbf{rule violations}.
+Applies \textbf{constraint-like method} to detect and repair invalid entries in a dataset. The proposed forbidden itemsets capture unlikely value co-occurrences, similar to denial constraints. Denial constraints are a formal method of describing rule violations. Due to the similarity of the Forbidden Itemsets with these rules, this
+method is only capable of detecting \textbf{rule violations}.
 
 % \subsubsection{HoloClean \cite{Rekatsinas2017-iw}}
 % HoloClean, a data cleaning system that relies on \textbf{statistical learning and inference} to unify a range of data repairing methods. Contributions in this tool include: 1. a compiler that generates a probabilistic model which unifies different signals for repairing a dataset 2. an algorithm that uses Bayesian analysis to prune the domain of the random variables corresponding to noisy cells in the input dataset to systematically tradeoff the scalability and quality of repairs 3. an approximation scheme that relaxes hard integrity constraints to priors over independent random variables.
 
 
-\subsection{KATARA \cite{Chu2015-fs}}
-A \textbf{knowledge base} and crowd powered data cleaning system that, given a table, a knowledge base, and a crowd, interprets table semantics to align it with the knowledge base. KATARA tries to find relations between attributes that have many overlapping values with a type in the knowledge base provided. If with enough confidence a relation is found, the complete set of rows will be checked. If there are mismatches with the knowledge base and the rows, cells will be marked erroneous. 
-As discussed in \autoref{sec:error_detection_tools}, KATARA makes use of knowledge bases with relations. It finds if a column in a target dataset is of a certain type, by finding the overlap of a column and a certain attribute type in the knowledge base. Then if possible, relations between found column types are proposed. These matching type relations will be checked as functional dependencies. Violations of these relations are rule violations. So KATARA is capable of finding \textbf{rule violations}.
+\subsection{KATARA (\cite{Chu2015-fs})}
+A \textbf{knowledge base} and crowd-powered data cleaning system that, given a table, a knowledge base, and a crowd, interprets table semantics to align it with the knowledge base. KATARA tries to find relations between attributes that have many overlapping values with a type in the knowledge base provided. If, with sound confidence, a relation is found, the complete set of rows will be checked. If there are mismatches with the knowledge base and the rows, cells will be marked erroneous. 
+As discussed in \autoref{sec:error_detection_tools}, KATARA makes use of knowledge bases with relations. It finds if a column in a target dataset is of a particular type, by finding the overlap of a column and a specific attribute type in the knowledge base. Then if possible, relations between found column types are proposed. These matching type relations will be checked as functional dependencies. Violations of these relations are rule violations. So KATARA is capable of finding \textbf{rule violations}.
 
 \subsection{Raha (\cite{Mahdavi2019-zf})}
-Raha is a human-guided error detection system. It selects different preconfigured strategies automatically, based on previously cleaned datasets. Then, it incorporates the \textbf{outputs from various error detection strategies as a feature vector for the error detection task}. Using these feature vectors, it creates clusters of which samples. These clusters will be humanly labeled to actively learn which values to mark as erroneous. 
-Because the Raha is using different underlying methods to learn which values are errors, it is capable of detecting \textbf{pattern violations}, \textbf{rule violations} and \textbf{outliers}. Because of the active learning of errors, it is also possible that the classifier consequently learns to mark \textbf{duplicates} as erroneous, as (near) duplicate rows will be in the exact same feature vector clusters. 
+Raha is a human-guided error detection system. It selects different pre-configured strategies automatically, based on previously cleaned datasets. It then incorporates the \textbf{outputs from various error detection strategies as a feature vector for the error detection task}. Using these feature vectors, it creates clusters of which samples. These clusters will be humanly labeled to actively learn which values to mark as erroneous. 
+Because Raha uses different underlying methods to learn which values are errors, it is capable of detecting \textbf{pattern violations}, \textbf{rule violations} and \textbf{outliers}. Because of the active learning of errors, it is also possible that the classifier consequently learns to mark \textbf{duplicates} as erroneous, as (near) duplicate rows will be in the same feature vector clusters. 
 
 \newpage
 \section{Error type coverage}
 \label{sec:error_type_coverage}
-The summarized underlying techniques are explained by the common error types that are detectable by the tools as seen in \autoref{tab:tools-error-types}.
+The summarized underlying techniques are explained by the common error types that are detectable by the tools, as seen in \autoref{tab:tools-error-types}.
 
 \begin{table}[h]
 \begin{adjustbox}{width=\textwidth,center}

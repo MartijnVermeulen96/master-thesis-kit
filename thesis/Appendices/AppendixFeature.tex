@@ -1,7 +1,9 @@
-\chapter{Feature importances} % Main appendix title
+\chapter{Feature importance} % Main appendix title
 \label{app:feature_importances}
+\section{F1 feature importance}
+The following subsections dive into the F1 feature importances of each tool. These analyses can be used as a reference for the main results given in \autoref{sec:results_interpretability}.
 
-\section{F1 feature importances}
+\label{appsec:f1_feature_importance}
 \subsection{FAHES \& ForbiddenItemSets}
 Due to the low average F1-scores for FAHES \& ForbiddenItemSets, it is not possible to extract any SHAP values from the estimators, as the estimate for the F1 is equal to 0. Whilst it was possible to extract interpretations from the precision and recall estimators, these will not be discussed as this is out of scope for this research for now.
 
@@ -116,3 +118,81 @@ But, again the most influential features are characters\_alphabet\_variance, cel
 \caption{Raha - Top 3 feature influence}
 \label{tab:top_influence_features_raha}
 \end{table}
+
+
+\section{Precision \& Recall importance}
+\label{appsec:prec_rec_feature_importance}
+The following figures are given additionally with the results described in the precision and recall feature importance analysis in \autoref{sec:results_interpretability}. For every selected tool and best performing (highest mean F1) configuration, the top 10 most impactful features according to SHAP value analysis are given below.
+
+\subsection{dBoost}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_dBoost.pdf}
+    \caption{dBoost - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_dBoost}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_dBoost.pdf}
+    \caption{dBoost - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_dBoost}
+\end{figure}
+
+\subsection{FAHES}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_FAHES.pdf}
+    \caption{FAHES - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_FAHES}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_FAHES.pdf}
+    \caption{FAHES - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_FAHES}
+\end{figure}
+
+
+\subsection{Forbidden Itemsets}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_ForbiddenItemsets.pdf}
+    \caption{Forbidden Itemsets - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_ForbiddenItemsets}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_ForbiddenItemsets.pdf}
+    \caption{Forbidden Itemsets - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_ForbiddenItemsets}
+\end{figure}
+
+
+\subsection{KATARA}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_KATARA.pdf}
+    \caption{KATARA - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_KATARA}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_KATARA.pdf}
+    \caption{KATARA - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_KATARA}
+\end{figure}
+
+
+\subsection{Raha}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_prec_Raha.pdf}
+    \caption{Raha - Top 10 Precision influential features according to SHAP values}
+    \label{fig:feature_importance_prec_Raha}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{thesis/Figures/RQ4/Shap_cell_rec_Raha.pdf}
+    \caption{Raha - Top 10 Recall influential features according to SHAP values}
+    \label{fig:feature_importance_rec_Raha}
+\end{figure}
